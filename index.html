@@ -887,6 +887,26 @@
     }, {threshold:.12});
     document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
+    // Fix: instantly reveal elements when navigating via anchor hash
+    function revealIfHash() {
+        if (window.location.hash) {
+            const target = document.querySelector(window.location.hash);
+            if (target) {
+                target.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+                if (target.classList.contains('reveal')) target.classList.add('visible');
+                // Also reveal parent section's reveal elements
+                const section = target.closest('section') || target;
+                section.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+            }
+        }
+    }
+    revealIfHash();
+    window.addEventListener('hashchange', revealIfHash);
+    // Also handle nav clicks that scroll to anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', () => setTimeout(revealIfHash, 100));
+    });
+
     // Animated Counters
     const counterObs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
