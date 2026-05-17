@@ -581,9 +581,15 @@
                                     <label class="md:hidden block text-white/40 text-xs font-semibold mb-1">Populacao (pl/ha)</label>
                                     <input type="number" min="100000" max="500000" step="10000" value="280000" placeholder="pl/ha" class="calc-pop w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3 text-white text-sm font-bold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition text-center">
                                 </div>
-                                <div class="flex items-center justify-center">
-                                    <span class="calc-bags-out text-2xl font-extrabold text-gold-400">700</span>
-                                    <span class="text-white/25 text-xs ml-1.5">sc</span>
+                                <div class="text-center">
+                                    <div class="flex items-center justify-center">
+                                        <span class="calc-bags-out text-2xl font-extrabold text-gold-400">700</span>
+                                        <span class="text-white/25 text-xs ml-1.5">sc</span>
+                                    </div>
+                                    <div class="flex items-center justify-center mt-0.5">
+                                        <span class="calc-bigbags-out text-sm font-bold text-emerald-400">28</span>
+                                        <span class="text-white/20 text-[10px] ml-1">bags</span>
+                                    </div>
                                 </div>
                                 <button onclick="removeCalcRow(this)" class="calc-remove hidden md:flex w-9 h-9 items-center justify-center rounded-xl bg-white/[.04] hover:bg-red-500/20 border border-white/[.06] hover:border-red-500/30 text-white/20 hover:text-red-400 transition cursor-pointer" title="Remover">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -602,7 +608,7 @@
 
                     <!-- Totals -->
                     <div class="border-t border-white/[.08] mt-8 pt-6">
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                             <div class="bg-white/[.04] rounded-2xl p-5 text-center border border-white/[.06]">
                                 <p class="text-white/40 text-xs font-semibold uppercase tracking-wider mb-1">Materiais</p>
                                 <p id="calc-total-items" class="text-xl font-extrabold text-white">1</p>
@@ -619,6 +625,11 @@
                                 <p class="text-gold-400/70 text-xs font-semibold uppercase tracking-[.15em] mb-1">Total Sacos</p>
                                 <p id="calc-total-bags" class="text-3xl font-extrabold text-gold-400">700</p>
                                 <p class="text-white/25 text-[10px]">sacos de 200.000 sementes</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-emerald-500/15 to-emerald-600/10 rounded-2xl p-5 text-center border border-emerald-500/25">
+                                <p class="text-emerald-400/70 text-xs font-semibold uppercase tracking-[.15em] mb-1">Total Bags</p>
+                                <p id="calc-total-bigbags" class="text-3xl font-extrabold text-emerald-400">28</p>
+                                <p class="text-white/25 text-[10px]">1 bag = 25 sacos</p>
                             </div>
                         </div>
 
@@ -931,9 +942,15 @@
                     <label class="md:hidden block text-white/40 text-xs font-semibold mb-1">Populacao (pl/ha)</label>
                     <input type="number" min="100000" max="500000" step="10000" value="280000" placeholder="pl/ha" class="calc-pop w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3 text-white text-sm font-bold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition text-center">
                 </div>
-                <div class="flex items-center justify-center">
-                    <span class="calc-bags-out text-2xl font-extrabold text-gold-400">0</span>
-                    <span class="text-white/25 text-xs ml-1.5">sc</span>
+                <div class="text-center">
+                    <div class="flex items-center justify-center">
+                        <span class="calc-bags-out text-2xl font-extrabold text-gold-400">0</span>
+                        <span class="text-white/25 text-xs ml-1.5">sc</span>
+                    </div>
+                    <div class="flex items-center justify-center mt-0.5">
+                        <span class="calc-bigbags-out text-sm font-bold text-emerald-400">0</span>
+                        <span class="text-white/20 text-[10px] ml-1">bags</span>
+                    </div>
                 </div>
                 <button onclick="removeCalcRow(this)" class="calc-remove hidden md:flex w-9 h-9 items-center justify-center rounded-xl bg-white/[.04] hover:bg-red-500/20 border border-white/[.06] hover:border-red-500/30 text-white/20 hover:text-red-400 transition cursor-pointer" title="Remover">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -943,6 +960,7 @@
         </div>`;
     }
 
+    const SACOS_PER_BIGBAG = 25;
     function recalcAll() {
         const rows = calcRows.querySelectorAll('.calc-row');
         let totalBags = 0, totalHa = 0, totalSeeds = 0;
@@ -951,16 +969,20 @@
             const pop = parseFloat(row.querySelector('.calc-pop').value) || 0;
             const seeds = ha * pop;
             const bags = Math.ceil(seeds / SEEDS_PER_BAG);
+            const bigbags = Math.ceil(bags / SACOS_PER_BIGBAG);
             row.querySelector('.calc-bags-out').textContent = bags.toLocaleString('pt-BR');
+            row.querySelector('.calc-bigbags-out').textContent = bigbags.toLocaleString('pt-BR');
             totalBags += bags;
             totalHa += ha;
             totalSeeds += seeds;
         });
+        const totalBigBags = Math.ceil(totalBags / SACOS_PER_BIGBAG);
         document.getElementById('calc-total-items').textContent = rows.length;
         document.getElementById('calc-total-ha').innerHTML = totalHa.toLocaleString('pt-BR') + ' <span class="text-sm font-normal text-white/30">ha</span>';
         const seedsLabel = totalSeeds >= 1e9 ? (totalSeeds / 1e9).toFixed(1).replace('.0','') + 'B' : totalSeeds >= 1e6 ? (totalSeeds / 1e6).toFixed(1).replace('.0','') + 'M' : totalSeeds.toLocaleString('pt-BR');
         document.getElementById('calc-total-seeds').textContent = seedsLabel;
         document.getElementById('calc-total-bags').textContent = totalBags.toLocaleString('pt-BR');
+        document.getElementById('calc-total-bigbags').textContent = totalBigBags.toLocaleString('pt-BR');
         // Show/hide remove btns (hide if only 1 row)
         const removeBtns = calcRows.querySelectorAll('.calc-remove');
         removeBtns.forEach(btn => { if (rows.length <= 1) btn.style.visibility='hidden'; else btn.style.visibility='visible'; });
@@ -994,21 +1016,23 @@
     // WhatsApp quote sender
     document.getElementById('calc-send-whatsapp').addEventListener('click', function() {
         const rows = calcRows.querySelectorAll('.calc-row');
-        let totalBags = 0, totalHa = 0, lines = [];
+        let totalSacos = 0, totalHa = 0, lines = [];
         let num = 1;
         rows.forEach(row => {
             const name = row.querySelector('.calc-name').value.trim() || ('Material ' + num);
             const ha = parseFloat(row.querySelector('.calc-ha').value) || 0;
             const pop = parseFloat(row.querySelector('.calc-pop').value) || 0;
-            const bags = Math.ceil((ha * pop) / SEEDS_PER_BAG);
+            const sacos = Math.ceil((ha * pop) / SEEDS_PER_BAG);
+            const bigbags = Math.ceil(sacos / SACOS_PER_BIGBAG);
             if (ha > 0) {
-                lines.push('*' + num + '. ' + name + '*\n   ' + ha.toLocaleString('pt-BR') + ' ha | ' + (pop/1000).toFixed(0) + 'k pl/ha | *' + bags.toLocaleString('pt-BR') + ' sacos*');
-                totalBags += bags;
+                lines.push('*' + num + '. ' + name + '*\n   ' + ha.toLocaleString('pt-BR') + ' ha | ' + (pop/1000).toFixed(0) + 'k pl/ha | *' + sacos.toLocaleString('pt-BR') + ' sc* (' + bigbags + ' bags)');
+                totalSacos += sacos;
                 totalHa += ha;
             }
             num++;
         });
         if (lines.length === 0) { alert('Preencha pelo menos um material com hectares.'); return; }
+        const totalBigBags = Math.ceil(totalSacos / SACOS_PER_BIGBAG);
         const msg = '*COTACAO DN SEEDS - Safra 26/27*\n'
             + '━━━━━━━━━━━━━━━━━━━\n\n'
             + lines.join('\n\n')
@@ -1016,7 +1040,8 @@
             + '*RESUMO TOTAL*\n'
             + 'Materiais: ' + lines.length + '\n'
             + 'Area total: ' + totalHa.toLocaleString('pt-BR') + ' ha\n'
-            + '*Total: ' + totalBags.toLocaleString('pt-BR') + ' sacos* (200k sem/sc)\n\n'
+            + '*Total: ' + totalSacos.toLocaleString('pt-BR') + ' sacos* (200k sem/sc)\n'
+            + '*Total: ' + totalBigBags.toLocaleString('pt-BR') + ' bags* (25 sc/bag)\n\n'
             + '_Calculado em dnseeds.com.br_';
         const url = 'https://wa.me/5577999999999?text=' + encodeURIComponent(msg);
         window.open(url, '_blank');
