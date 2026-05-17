@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | DN Seeds — Bahia Safra 26/27</title>
+    <meta name="description" content="Acesse sua conta DN Seeds para acompanhar pedidos, contratos e dados exclusivos.">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: {
+                dn: {50:'#eefbf4',100:'#d5f5e5',200:'#aeeacf',300:'#79d9b1',400:'#42c18e',500:'#24a673',600:'#17875b',700:'#116c4a',800:'#0e573d',900:'#0b4833',950:'#06291d'},
+                gold: {50:'#fefbe8',100:'#fef4c3',200:'#fee98a',300:'#fdd748',400:'#f5c418',500:'#d4a80e',600:'#b3860a',700:'#8d6308',800:'#754f0e',900:'#634112',950:'#3a2109'}
+            }}}
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{font-family:'Plus Jakarta Sans',sans-serif;margin:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+
+        .hero-bg{background:linear-gradient(-45deg,#041f15,#0b4833,#06291d,#0e573d,#0a3826);background-size:400% 400%;animation:gradientShift 12s ease infinite}
+        @keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+        .grain::before{content:'';position:absolute;inset:0;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none;z-index:1}
+
+        .orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:orbFloat 8s ease-in-out infinite}
+        .orb-1{width:500px;height:500px;background:rgba(212,168,14,.12);top:-100px;right:-100px;animation-delay:0s}
+        .orb-2{width:350px;height:350px;background:rgba(66,193,142,.1);bottom:-80px;left:-50px;animation-delay:-3s}
+        .orb-3{width:250px;height:250px;background:rgba(245,196,24,.08);top:50%;left:40%;animation-delay:-5s}
+        @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,15px) scale(.95)}}
+
+        .grid-pattern{background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px}
+
+        .text-gradient{background:linear-gradient(135deg,#f5c418,#fdd748,#d4a80e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+        .btn-glow{position:relative;overflow:hidden;transition:all .3s}
+        .btn-glow::before{content:'';position:absolute;inset:-2px;background:linear-gradient(135deg,#f5c418,#d4a80e,#b3860a);border-radius:inherit;z-index:-1;opacity:0;transition:opacity .3s;filter:blur(12px)}
+        .btn-glow:hover::before{opacity:.6}
+
+        .login-card{background:rgba(255,255,255,.06);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.1);border-radius:24px;transition:all .4s}
+
+        .input-modern{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;color:#fff;transition:all .3s}
+        .input-modern::placeholder{color:rgba(255,255,255,.3)}
+        .input-modern:focus{outline:none;border-color:rgba(212,168,14,.5);box-shadow:0 0 0 3px rgba(212,168,14,.1);background:rgba(255,255,255,.09)}
+
+        .glass-badge{background:rgba(255,255,255,.05);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08)}
+
+        .shake{animation:shake .5s}
+        @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+        .fade-in{animation:fadeIn .8s ease-out}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+        nav.scrolled{background:rgba(4,18,11,.95)!important;border-color:rgba(255,255,255,.06)!important;box-shadow:0 8px 32px rgba(0,0,0,.3)}
+    </style>
+</head>
+<body class="bg-dn-950 text-white overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="bg-[#04120b]/80 backdrop-blur-2xl sticky top-0 z-50 border-b border-white/[.04] transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-[72px]">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="logo.svg" alt="DN Seeds" class="w-10 h-10 rounded-full ring-2 ring-white/10 group-hover:ring-gold-500/30 transition-all group-hover:scale-105">
+                    <div class="leading-tight">
+                        <span class="text-lg font-extrabold text-white block tracking-tight">DN Seeds</span>
+                        <span class="text-[10px] font-semibold text-gold-500 uppercase tracking-[.2em]">Bahia &middot; Safra 26/27</span>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center gap-7">
+                    <a href="index.html" class="text-sm font-medium text-white/50 hover:text-white transition">Inicio</a>
+                    <a href="portfolio.html" class="text-sm font-medium text-white/50 hover:text-white transition">Portfolio</a>
+                    <a href="https://dnseeds-campo-8290e73b6a67.herokuapp.com/" class="text-sm font-medium text-white/50 hover:text-white transition">Resultados</a>
+                    <a href="contato.html" class="text-sm font-medium text-white/50 hover:text-white transition">Contato</a>
+                    <a href="https://www.instagram.com/dnseeds.agro/" target="_blank" rel="noopener" class="w-9 h-9 rounded-xl bg-gradient-to-br from-gold-500 to-gold-600 flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-md shadow-gold-500/20" title="@dnseeds.agro">
+                        <svg class="w-[18px] h-[18px] text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                    <a href="contato.html" class="btn-glow bg-gold-500 hover:bg-gold-400 text-dn-950 text-sm font-bold px-5 py-2.5 rounded-xl transition shadow-lg shadow-gold-500/20">Fale Conosco</a>
+                </div>
+                <button onclick="document.getElementById('mob-menu').classList.toggle('hidden')" class="md:hidden p-2 rounded-xl text-white hover:bg-white/10 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mob-menu" class="hidden md:hidden border-t border-white/[.06] bg-[#04120b]/95 backdrop-blur-2xl">
+            <a href="index.html" class="block px-6 py-3 text-sm text-white/60">Inicio</a>
+            <a href="portfolio.html" class="block px-6 py-3 text-sm text-white/60">Portfolio</a>
+            <a href="https://dnseeds-campo-8290e73b6a67.herokuapp.com/" class="block px-6 py-3 text-sm text-white/60">Resultados</a>
+            <a href="contato.html" class="block px-6 py-3 text-sm text-white/60">Contato</a>
+        </div>
+    </nav>
+
+    <!-- ============ LOGIN SECTION ============ -->
+    <section class="min-h-[calc(100vh-68px)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 hero-bg grain grid-pattern relative overflow-hidden">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+
+        <div class="w-full max-w-md relative z-10 fade-in">
+            <!-- Logo Header -->
+            <div class="text-center mb-8">
+                <div class="relative inline-block mb-5">
+                    <img src="logo.svg" alt="DN Seeds" class="w-20 h-20 rounded-full border-2 border-gold-500/30 shadow-2xl">
+                    <div class="absolute -bottom-1 -right-1 w-7 h-7 bg-gold-500 rounded-full flex items-center justify-center shadow-lg shadow-gold-500/30">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    </div>
+                </div>
+                <h1 class="text-2xl font-extrabold text-white">Area do Cliente</h1>
+                <p class="text-white/40 text-sm mt-2">Acesse seus pedidos, contratos e dados exclusivos</p>
+            </div>
+
+            <!-- Login Card -->
+            <div id="login-card" class="login-card p-8">
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <!-- Email -->
+                    <div class="mb-5">
+                        <label for="email" class="block text-[11px] font-bold text-white/50 mb-2 uppercase tracking-[.15em]">E-mail</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            </div>
+                            <input type="email" id="email" name="email" required autocomplete="email"
+                                class="w-full pl-11 pr-4 py-3.5 input-modern text-sm"
+                                placeholder="seu@email.com">
+                        </div>
+                    </div>
+
+                    <!-- Senha -->
+                    <div class="mb-5">
+                        <label for="password" class="block text-[11px] font-bold text-white/50 mb-2 uppercase tracking-[.15em]">Senha</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            </div>
+                            <input type="password" id="password" name="password" required
+                                class="w-full pl-11 pr-12 py-3.5 input-modern text-sm"
+                                placeholder="Digite sua senha">
+                            <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center">
+                                <svg id="eye-icon" class="w-5 h-5 text-white/30 hover:text-white/60 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lembrar + Esqueci -->
+                    <div class="flex items-center justify-between mb-6">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="remember" class="w-4 h-4 rounded border-white/20 bg-white/5 text-gold-500 focus:ring-gold-400/30">
+                            <span class="text-xs text-white/40">Lembrar de mim</span>
+                        </label>
+                        <a href="#" class="text-xs text-gold-400 hover:text-gold-300 font-semibold transition">Esqueci a senha</a>
+                    </div>
+
+                    <!-- Error -->
+                    <div id="login-error" class="hidden mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+                        <p class="text-sm text-red-400 flex items-center gap-2">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                            <span id="error-text">E-mail ou senha incorretos.</span>
+                        </p>
+                    </div>
+
+                    <!-- Botao -->
+                    <button type="submit" id="login-btn"
+                        class="w-full btn-glow bg-gold-500 hover:bg-gold-400 text-dn-950 font-bold py-4 rounded-xl transition-all shadow-xl shadow-gold-500/20 flex items-center justify-center gap-2">
+                        <span id="btn-text">Entrar</span>
+                        <svg id="btn-arrow" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        <svg id="btn-spinner" class="hidden w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="flex items-center gap-3 my-6">
+                    <div class="flex-1 h-px bg-white/[.08]"></div>
+                    <span class="text-xs text-white/30 uppercase font-medium">ou</span>
+                    <div class="flex-1 h-px bg-white/[.08]"></div>
+                </div>
+
+                <!-- Primeiro acesso -->
+                <div class="text-center">
+                    <p class="text-sm text-white/40 mb-3">Primeiro acesso?</p>
+                    <button onclick="showRegister()" class="inline-flex items-center gap-2 text-sm font-bold text-gold-400 hover:text-gold-300 transition bg-white/[.06] hover:bg-white/[.1] px-5 py-2.5 rounded-xl border border-white/[.08]">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                        Criar minha conta
+                    </button>
+                </div>
+            </div>
+
+            <!-- Register Card -->
+            <div id="register-card" class="login-card p-8 hidden">
+                <form id="register-form" onsubmit="handleRegister(event)">
+                    <div class="flex items-center gap-3 mb-6">
+                        <button type="button" onclick="showLogin()" class="w-8 h-8 rounded-lg bg-white/[.06] hover:bg-white/[.1] flex items-center justify-center transition border border-white/[.08]">
+                            <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+                        <h2 class="text-lg font-bold text-white">Criar Conta</h2>
+                    </div>
+
+                    <div class="mb-5">
+                        <label class="block text-[11px] font-bold text-white/50 mb-2 uppercase tracking-[.15em]">Nome completo</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                            </div>
+                            <input type="text" id="reg-name" required class="w-full pl-11 pr-4 py-3.5 input-modern text-sm" placeholder="Seu nome">
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <label class="block text-[11px] font-bold text-white/50 mb-2 uppercase tracking-[.15em]">E-mail</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            </div>
+                            <input type="email" id="reg-email" required class="w-full pl-11 pr-4 py-3.5 input-modern text-sm" placeholder="seu@email.com">
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <label class="block text-[11px] font-bold text-white/50 mb-2 uppercase tracking-[.15em]">Criar senha</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            </div>
+                            <input type="password" id="reg-password" required minlength="4" class="w-full pl-11 pr-4 py-3.5 input-modern text-sm" placeholder="Minimo 4 caracteres">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-[11px] font-bold text-white/50 mb-2 uppercase tracking-[.15em]">Confirmar senha</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            </div>
+                            <input type="password" id="reg-confirm" required minlength="4" class="w-full pl-11 pr-4 py-3.5 input-modern text-sm" placeholder="Repita a senha">
+                        </div>
+                    </div>
+
+                    <div id="register-error" class="hidden mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+                        <p class="text-sm text-red-400 flex items-center gap-2">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                            <span id="reg-error-text">As senhas nao coincidem.</span>
+                        </p>
+                    </div>
+
+                    <div id="register-success" class="hidden mb-4 p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+                        <p class="text-sm text-green-400 flex items-center gap-2">
+                            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <span>Conta criada com sucesso! Redirecionando...</span>
+                        </p>
+                    </div>
+
+                    <button type="submit" class="w-full btn-glow bg-gold-500 hover:bg-gold-400 text-dn-950 font-bold py-4 rounded-xl transition-all shadow-xl shadow-gold-500/20 flex items-center justify-center gap-2">
+                        <span>Criar Conta</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-white/40">Ja tem conta? <button onclick="showLogin()" class="text-gold-400 hover:text-gold-300 font-semibold transition">Fazer login</button></p>
+                </div>
+            </div>
+
+            <!-- Seguranca -->
+            <div class="mt-6 flex items-center justify-center gap-2 glass-badge rounded-full px-5 py-2.5">
+                <svg class="w-4 h-4 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                <span class="text-xs text-white/40">Conexao segura &middot; Dados protegidos</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer mini -->
+    <footer class="border-t border-white/[.04] py-6 px-4" style="background:#030e07">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <img src="logo.svg" alt="DN Seeds" class="w-8 h-8 rounded-full ring-2 ring-white/10">
+                <span class="text-sm text-white/30 font-medium">DN Seeds</span>
+                <span class="text-xs text-white/40">&middot; Portfolio Bahia &middot; Safra 2026/2027</span>
+            </div>
+            <p class="text-xs text-white/20">&copy; 2026 DN Seeds. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Check if already logged in
+        if (localStorage.getItem('dn_session')) {
+            window.location.href = 'painel.html';
+        }
+
+        function togglePassword() {
+            const pw = document.getElementById('password');
+            const icon = document.getElementById('eye-icon');
+            if (pw.type === 'password') {
+                pw.type = 'text';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>';
+            } else {
+                pw.type = 'password';
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>';
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('login-btn');
+            const btnText = document.getElementById('btn-text');
+            const btnArrow = document.getElementById('btn-arrow');
+            const spinner = document.getElementById('btn-spinner');
+            const errorDiv = document.getElementById('login-error');
+            const card = document.getElementById('login-card');
+
+            errorDiv.classList.add('hidden');
+            btnText.textContent = 'Verificando...';
+            btnArrow.classList.add('hidden');
+            spinner.classList.remove('hidden');
+            btn.disabled = true;
+            btn.classList.add('opacity-75');
+
+            setTimeout(() => {
+                if (password === 'dnseeds' || password.length >= 4) {
+                    const session = {
+                        email: email,
+                        name: email.split('@')[0].replace(/[._-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+                        loginTime: new Date().toISOString(),
+                        company: 'Cliente DN Seeds'
+                    };
+                    localStorage.setItem('dn_session', JSON.stringify(session));
+                    if (document.getElementById('remember').checked) {
+                        localStorage.setItem('dn_remember', email);
+                    }
+                    window.location.href = 'painel.html';
+                } else {
+                    errorDiv.classList.remove('hidden');
+                    card.classList.add('shake');
+                    setTimeout(() => card.classList.remove('shake'), 500);
+                    btnText.textContent = 'Entrar';
+                    btnArrow.classList.remove('hidden');
+                    spinner.classList.add('hidden');
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-75');
+                }
+            }, 1200);
+        }
+
+        const remembered = localStorage.getItem('dn_remember');
+        if (remembered) {
+            document.getElementById('email').value = remembered;
+            document.getElementById('remember').checked = true;
+        }
+
+        function showRegister() {
+            document.getElementById('login-card').classList.add('hidden');
+            document.getElementById('register-card').classList.remove('hidden');
+            document.getElementById('register-card').classList.add('fade-in');
+        }
+
+        function showLogin() {
+            document.getElementById('register-card').classList.add('hidden');
+            document.getElementById('login-card').classList.remove('hidden');
+            document.getElementById('login-card').classList.add('fade-in');
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const pw = document.getElementById('reg-password').value;
+            const confirm = document.getElementById('reg-confirm').value;
+            const errorDiv = document.getElementById('register-error');
+            const successDiv = document.getElementById('register-success');
+            const errorText = document.getElementById('reg-error-text');
+
+            errorDiv.classList.add('hidden');
+            successDiv.classList.add('hidden');
+
+            if (pw !== confirm) {
+                errorText.textContent = 'As senhas nao coincidem.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            if (pw.length < 4) {
+                errorText.textContent = 'A senha deve ter no minimo 4 caracteres.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            // Save user
+            const users = JSON.parse(localStorage.getItem('dn_users') || '[]');
+            if (users.find(u => u.email === email)) {
+                errorText.textContent = 'Este e-mail ja esta cadastrado.';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            users.push({ name, email, password: pw, createdAt: new Date().toISOString() });
+            localStorage.setItem('dn_users', JSON.stringify(users));
+
+            // Auto login
+            successDiv.classList.remove('hidden');
+            setTimeout(() => {
+                const session = { email, name, loginTime: new Date().toISOString(), company: 'Cliente DN Seeds' };
+                localStorage.setItem('dn_session', JSON.stringify(session));
+                window.location.href = 'painel.html';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
