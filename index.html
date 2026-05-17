@@ -159,6 +159,21 @@
         @keyframes fadeSlideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
         @keyframes fadeSlideOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(10px);height:0;margin:0;padding:0;overflow:hidden}}
 
+        /* ===== AUTOCOMPLETE DROPDOWN ===== */
+        .calc-ac-wrap{position:relative}
+        .calc-ac-list{position:absolute;left:0;right:0;top:100%;margin-top:4px;max-height:220px;overflow-y:auto;background:rgba(10,30,20,.97);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:12px;z-index:60;display:none;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+        .calc-ac-list.show{display:block;animation:fadeSlideIn .15s ease}
+        .calc-ac-item{padding:10px 14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s}
+        .calc-ac-item:last-child{border-bottom:none}
+        .calc-ac-item:hover,.calc-ac-item.active{background:rgba(212,168,14,.12)}
+        .calc-ac-item .ac-name{font-size:13px;font-weight:700;color:rgba(255,255,255,.85)}
+        .calc-ac-item .ac-name mark{background:none;color:#f5c418;font-weight:800}
+        .calc-ac-item .ac-brand{font-size:10px;font-weight:600;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+        .calc-ac-empty{padding:14px;text-align:center;font-size:12px;color:rgba(255,255,255,.25);font-style:italic}
+        .calc-ac-list::-webkit-scrollbar{width:5px}
+        .calc-ac-list::-webkit-scrollbar-track{background:transparent}
+        .calc-ac-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:9px}
+
         /* ===== COUNTER ===== */
         .counter{font-variant-numeric:tabular-nums}
 
@@ -571,7 +586,10 @@
                             <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr_auto] gap-3 items-center">
                                 <div>
                                     <label class="md:hidden block text-white/40 text-xs font-semibold mb-1">Material / Cultivar</label>
-                                    <input type="text" placeholder="Ex: M8349 IPRO" class="calc-name w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3 text-white text-sm font-semibold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition">
+                                    <div class="calc-ac-wrap">
+                                        <input type="text" placeholder="Digite ou selecione a cultivar..." class="calc-name w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3 text-white text-sm font-semibold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition" autocomplete="off">
+                                        <div class="calc-ac-list"></div>
+                                    </div>
                                 </div>
                                 <div>
                                     <label class="md:hidden block text-white/40 text-xs font-semibold mb-1">Hectares</label>
@@ -947,12 +965,130 @@
     const calcRows = document.getElementById('calc-rows');
     const calcAddBtn = document.getElementById('calc-add-row');
 
+    // Cultivar database (from portfolio)
+    const CULTIVARES = [
+        {n:'BMX ATAQUE I2X',b:'Brasmax'},{n:'BMX COBRE I2X',b:'Brasmax'},{n:'BMX CRUZADA CE',b:'Brasmax'},
+        {n:'BMX DOMINIO IPRO',b:'Brasmax'},{n:'BMX EXTREMA IPRO',b:'Brasmax'},{n:'BMX FOCO IPRO',b:'Brasmax'},
+        {n:'BMX FORTALEZA IPRO',b:'Brasmax'},{n:'BMX GUEPARDO IPRO',b:'Brasmax'},{n:'BMX HERA I2X',b:'Brasmax'},
+        {n:'BMX IMPETO I2X',b:'Brasmax'},{n:'BMX INVICTA I2X',b:'Brasmax'},{n:'BMX OLIMPO IPRO',b:'Brasmax'},
+        {n:'BMX SPARTA I2X',b:'Brasmax'},{n:'BMX 83 E',b:'Brasmax'},
+        {n:'DM 68I69 IPRO',b:'Don Mario'},{n:'DM 72IX74 I2X',b:'Don Mario'},{n:'DM 78IX80 I2X',b:'Don Mario'},
+        {n:'DM 79K80 CE',b:'Don Mario'},{n:'DM 80I85 IPRO',b:'Don Mario'},{n:'DM 82I78 IPRO',b:'Don Mario'},
+        {n:'DM 83IX84 I2X',b:'Don Mario'},
+        {n:'GH 1687 IPRO',b:'Golden Harvest'},{n:'GH 2478 IPRO',b:'Golden Harvest'},
+        {n:'GH 2483 IPRO',b:'Golden Harvest'},{n:'GH 2581 I2X',b:'Golden Harvest'},
+        {n:'HO ARARI I2X',b:'HO Genetica'},{n:'HO COARI I2X',b:'HO Genetica'},{n:'HO GARCAS I2X',b:'HO Genetica'},
+        {n:'HO GUAPO I2X',b:'HO Genetica'},{n:'HO JURUENA IPRO',b:'HO Genetica'},{n:'HO MAMORE IPRO',b:'HO Genetica'},
+        {n:'HO MUTUM I2X',b:'HO Genetica'},{n:'HO NOBRES I2X',b:'HO Genetica'},{n:'HO PIAUI I2X',b:'HO Genetica'},
+        {n:'HO POTI I2X',b:'HO Genetica'},
+        {n:'LTT ADAPTA IPRO',b:'Latitude'},{n:'LTT EVOLUI IPRO',b:'Latitude'},{n:'LTT FORTALECE',b:'Latitude'},
+        {n:'LTT MAXIMIZA IPRO',b:'Latitude'},{n:'LTT OTIMIZA IPRO',b:'Latitude'},
+        {n:'M 8349 IPRO',b:'Monsoy'},{n:'M 8372 IPRO',b:'Monsoy'},{n:'M 8434 I2X',b:'Monsoy'},
+        {n:'M 8606 I2X',b:'Monsoy'},{n:'M 8644 IPRO',b:'Monsoy'},{n:'M 8808 IPRO',b:'Monsoy'},
+        {n:'NEO 700 I2X',b:'Neogen'},{n:'NEO 761 I2X',b:'Neogen'},{n:'NEO 771 I2X',b:'Neogen'},
+        {n:'NEO 780 CE',b:'Neogen'},{n:'NEO 790 IPRO',b:'Neogen'},{n:'NEO 800 I2X',b:'Neogen'},
+        {n:'NEO 801 CE',b:'Neogen'},{n:'NEO 802 I2X',b:'Neogen'},{n:'NEO 810 I2X',b:'Neogen'},
+        {n:'NEO 811 I2X',b:'Neogen'},{n:'NEO 820 IPRO',b:'Neogen'},{n:'NEO 821 I2X',b:'Neogen'},
+        {n:'NEO 840 IPRO',b:'Neogen'},
+        {n:'NS 6446 I2X',b:'Nidera'},{n:'NS 7524 IPRO',b:'Nidera'},{n:'NS 7902 IPRO',b:'Nidera'},
+        {n:'NS 8025 I2X',b:'Nidera'},{n:'NS 8080 IPRO',b:'Nidera'},{n:'NS 8325 IPRO',b:'Nidera'},
+        {n:'PP 9310 IPRO',b:'Pampeana'},{n:'PP AVANCO IPRO',b:'Pampeana'},{n:'PP BAGUAL IPRO',b:'Pampeana'},
+        {n:'PP BRUTUS IPRO',b:'Pampeana'},{n:'PP INDIARIA IPRO',b:'Pampeana'},{n:'PP LENDA IPRO',b:'Pampeana'},
+        {n:'SOY AMPLA IPRO',b:'Genetica Soy'},{n:'SOY COMBATE IPRO',b:'Genetica Soy'},
+        {n:'SOY COMPLETA IPRO',b:'Genetica Soy'},{n:'SOY ESCUDO IPRO',b:'Genetica Soy'},
+        {n:'SOY MURALHA IPRO',b:'Genetica Soy'},{n:'SOY SPECTRO IPRO',b:'Genetica Soy'},
+        {n:'ST 822 I2X',b:'Soy Tech'},{n:'ST 828 I2X',b:'Soy Tech'},
+        {n:'STINE 78KA42 CE',b:'Stine'},{n:'STINE 79KA72 CE',b:'Stine'},
+        {n:'STINE 80KA72 CE',b:'Stine'},{n:'STINE 84KA92 CE',b:'Stine'},
+        {n:'TMG 2285 IPRO',b:'TMG'},{n:'TMG 22X77 I2X',b:'TMG'},{n:'TMG 22X83 I2X',b:'TMG'},
+        {n:'TMG 2379 IPRO',b:'TMG'},{n:'TMG 2383 IPRO',b:'TMG'},{n:'TMG 7067 IPRO',b:'TMG'},
+        {n:'TMG BRAUNA I2X',b:'TMG'},{n:'TMG CASTANHEIRA I2X',b:'TMG'},{n:'TMG INGA I2X',b:'TMG'},
+        {n:'TMG ITAUBA I2X',b:'TMG'},{n:'TMG JATOBA I2X',b:'TMG'},{n:'TMG MURICI I2X',b:'TMG'}
+    ];
+
+    // Autocomplete engine
+    function initAutocomplete(input) {
+        const list = input.nextElementSibling;
+        if (!list || !list.classList.contains('calc-ac-list')) return;
+        let activeIdx = -1;
+
+        function highlight(text, query) {
+            if (!query) return text;
+            const re = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+            return text.replace(re, '<mark>$1</mark>');
+        }
+
+        function render(query) {
+            const q = (query || '').trim().toUpperCase();
+            let matches = CULTIVARES;
+            if (q.length > 0) {
+                matches = CULTIVARES.filter(c => c.n.toUpperCase().includes(q) || c.b.toUpperCase().includes(q));
+            }
+            if (matches.length === 0) {
+                list.innerHTML = '<div class="calc-ac-empty">Nenhuma cultivar encontrada. Voce pode digitar manualmente.</div>';
+            } else {
+                list.innerHTML = matches.map((c, i) =>
+                    `<div class="calc-ac-item" data-idx="${i}" data-val="${c.n}">
+                        <span class="ac-name">${highlight(c.n, q)}</span>
+                        <span class="ac-brand">${c.b}</span>
+                    </div>`
+                ).join('');
+            }
+            activeIdx = -1;
+            list.classList.add('show');
+        }
+
+        function close() { list.classList.remove('show'); activeIdx = -1; }
+
+        function select(val) {
+            input.value = val;
+            close();
+            recalcAll();
+        }
+
+        function setActive(idx) {
+            const items = list.querySelectorAll('.calc-ac-item');
+            items.forEach(el => el.classList.remove('active'));
+            if (idx >= 0 && idx < items.length) {
+                items[idx].classList.add('active');
+                items[idx].scrollIntoView({ block: 'nearest' });
+                activeIdx = idx;
+            } else { activeIdx = -1; }
+        }
+
+        input.addEventListener('focus', () => render(input.value));
+        input.addEventListener('input', () => render(input.value));
+
+        input.addEventListener('keydown', (e) => {
+            const items = list.querySelectorAll('.calc-ac-item');
+            if (!list.classList.contains('show') || items.length === 0) return;
+            if (e.key === 'ArrowDown') { e.preventDefault(); setActive(activeIdx < items.length - 1 ? activeIdx + 1 : 0); }
+            else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(activeIdx > 0 ? activeIdx - 1 : items.length - 1); }
+            else if (e.key === 'Enter') { e.preventDefault(); if (activeIdx >= 0) select(items[activeIdx].dataset.val); else close(); }
+            else if (e.key === 'Escape') { close(); }
+        });
+
+        list.addEventListener('mousedown', (e) => {
+            e.preventDefault(); // keep focus on input
+            const item = e.target.closest('.calc-ac-item');
+            if (item) select(item.dataset.val);
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!input.contains(e.target) && !list.contains(e.target)) close();
+        });
+    }
+
     function calcRowTemplate() {
         return `<div class="calc-row bg-white/[.03] border border-white/[.07] rounded-2xl p-4 md:p-3" style="animation:fadeSlideIn .3s ease">
             <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr_auto] gap-3 items-center">
                 <div>
                     <label class="md:hidden block text-white/40 text-xs font-semibold mb-1">Material / Cultivar</label>
-                    <input type="text" placeholder="Ex: M8349 IPRO" class="calc-name w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3 text-white text-sm font-semibold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition">
+                    <div class="calc-ac-wrap">
+                        <input type="text" placeholder="Digite ou selecione a cultivar..." class="calc-name w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3 text-white text-sm font-semibold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition" autocomplete="off">
+                        <div class="calc-ac-list"></div>
+                    </div>
                 </div>
                 <div>
                     <label class="md:hidden block text-white/40 text-xs font-semibold mb-1">Hectares</label>
@@ -1014,7 +1150,9 @@
         const row = div.firstElementChild;
         calcRows.appendChild(row);
         row.querySelectorAll('input').forEach(inp => inp.addEventListener('input', recalcAll));
-        row.querySelector('.calc-ha').focus();
+        const nameInput = row.querySelector('.calc-name');
+        initAutocomplete(nameInput);
+        nameInput.focus();
         recalcAll();
     }
 
@@ -1026,9 +1164,11 @@
         setTimeout(() => { row.remove(); recalcAll(); }, 200);
     }
 
-    // Init: bind inputs on first row + add button
+    // Init: bind inputs on first row + add button + autocomplete
     calcRows.querySelectorAll('.calc-row').forEach(row => {
         row.querySelectorAll('input').forEach(inp => inp.addEventListener('input', recalcAll));
+        const nameInput = row.querySelector('.calc-name');
+        if (nameInput) initAutocomplete(nameInput);
     });
     calcAddBtn.addEventListener('click', addCalcRow);
     recalcAll();
