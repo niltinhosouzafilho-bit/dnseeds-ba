@@ -9,17 +9,17 @@
   <!-- White background -->
   <circle cx="100" cy="100" r="90" fill="#ffffff"/>
   <g clip-path="url(#c)">
-    <!-- Beige/sand petal — bottom left -->
-    <path d="M98,122 C82,112 55,108 38,118 C18,132 10,158 10,190 L10,200 L100,200 L100,122 Z" fill="#C2B280"/>
-    <!-- Dark green leaf — bottom right (extends higher) -->
-    <path d="M102,110 C120,92 148,84 168,94 C188,108 194,140 194,175 L194,200 L100,200 L100,122 Z" fill="#1A6B4F"/>
-    <!-- White vertical separator -->
-    <line x1="100" y1="108" x2="100" y2="200" stroke="#ffffff" stroke-width="5"/>
-    <!-- Gold arc 1 — outermost (wide smooth curve) -->
-    <path d="M46,120 C46,32 154,32 154,120" fill="none" stroke="#C9A811" stroke-width="12" stroke-linecap="butt"/>
+    <!-- Beige/sand petal — bottom left (smaller, lower) -->
+    <path d="M100,125 C85,115 55,110 35,122 C15,138 10,165 10,200 L100,200 Z" fill="#C2B280"/>
+    <!-- Dark green leaf — bottom right (larger, extends higher) -->
+    <path d="M100,125 C115,100 145,88 170,96 C192,108 195,145 195,200 L100,200 Z" fill="#1A6B4F"/>
+    <!-- White vertical separator (only below arcs) -->
+    <line x1="100" y1="125" x2="100" y2="200" stroke="#ffffff" stroke-width="5"/>
+    <!-- Gold arc 1 — outermost -->
+    <path d="M48,122 C48,35 152,35 152,122" fill="none" stroke="#C9A811" stroke-width="12" stroke-linecap="butt"/>
     <!-- Gold arc 2 — middle -->
-    <path d="M62,118 C62,48 138,48 138,118" fill="none" stroke="#C9A811" stroke-width="10" stroke-linecap="butt"/>
+    <path d="M64,120 C64,50 136,50 136,120" fill="none" stroke="#C9A811" stroke-width="10" stroke-linecap="butt"/>
     <!-- Gold arc 3 — innermost -->
-    <path d="M78,116 C78,64 122,64 122,116" fill="none" stroke="#C9A811" stroke-width="8" stroke-linecap="butt"/>
+    <path d="M80,118 C80,66 120,66 120,118" fill="none" stroke="#C9A811" stroke-width="8" stroke-linecap="butt"/>
   </g>
 </svg>
