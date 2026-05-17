@@ -156,6 +156,8 @@
         .wa-ring{position:absolute;inset:0;border-radius:50%;border:2.5px solid #25D366;animation:waRing 2.5s ease-out infinite;pointer-events:none}
         @keyframes waFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
         @keyframes waRing{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.9);opacity:0}}
+        @keyframes fadeSlideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes fadeSlideOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(10px);height:0;margin:0;padding:0;overflow:hidden}}
 
         /* ===== COUNTER ===== */
         .counter{font-variant-numeric:tabular-nums}
@@ -523,60 +525,104 @@
     <!-- ============ CALCULADORA DE SEMENTES ============ -->
     <section id="calculadora" class="py-20 md:py-28 px-4 sm:px-6 lg:px-8" style="background:linear-gradient(180deg,#04120b 0%,#071a10 50%,#04120b 100%)">
         <div class="max-w-7xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Left: Info -->
-                <div class="reveal">
-                    <span class="tag bg-gold-500/10 border border-gold-500/15 text-gold-400 mb-5">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                        Planejamento
-                    </span>
-                    <h2 class="text-3xl md:text-[2.8rem] font-extrabold text-white mb-4 tracking-tight leading-tight">Calculadora de <span class="text-gradient">Sementes</span></h2>
-                    <p class="text-white/40 text-lg font-light mb-8 leading-relaxed">Estime a quantidade de bags necessaria para sua area. Informe os hectares e a populacao desejada — o calculo e automatico.</p>
-                    <div class="space-y-4 text-sm text-white/30">
-                        <div class="flex items-center gap-3"><svg class="w-5 h-5 text-gold-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>1 saco = 200.000 sementes (200 mil)</span></div>
-                        <div class="flex items-center gap-3"><svg class="w-5 h-5 text-gold-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>Populacao padrao Bahia: 260.000 a 320.000 plantas/ha</span></div>
-                        <div class="flex items-center gap-3"><svg class="w-5 h-5 text-gold-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span>Considere margem de seguranca de 10-15% no plantio</span></div>
+            <!-- Header -->
+            <div class="text-center mb-12 reveal">
+                <span class="tag bg-gold-500/10 border border-gold-500/15 text-gold-400 mb-5 inline-flex">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    Planejamento
+                </span>
+                <h2 class="text-3xl md:text-[2.8rem] font-extrabold text-white mb-4 tracking-tight leading-tight">Calculadora de <span class="text-gradient">Sementes</span></h2>
+                <p class="text-white/40 text-lg font-light max-w-2xl mx-auto">Adicione os materiais que precisa, informe hectares e populacao — o calculo e automatico para cada cultivar.</p>
+            </div>
+
+            <!-- Calculator Card - Full Width -->
+            <div class="reveal">
+                <div class="bg-white/[.04] backdrop-blur-xl rounded-3xl border border-white/[.08] p-6 md:p-10">
+
+                    <!-- Info chips -->
+                    <div class="flex flex-wrap gap-3 mb-8">
+                        <span class="inline-flex items-center gap-2 bg-white/[.04] border border-white/[.06] rounded-full px-4 py-2 text-xs text-white/40">
+                            <svg class="w-3.5 h-3.5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            1 saco = 200.000 sementes
+                        </span>
+                        <span class="inline-flex items-center gap-2 bg-white/[.04] border border-white/[.06] rounded-full px-4 py-2 text-xs text-white/40">
+                            <svg class="w-3.5 h-3.5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Populacao Bahia: 260k-320k pl/ha
+                        </span>
+                        <span class="inline-flex items-center gap-2 bg-white/[.04] border border-white/[.06] rounded-full px-4 py-2 text-xs text-white/40">
+                            <svg class="w-3.5 h-3.5 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Margem de seguranca: 10-15%
+                        </span>
                     </div>
-                </div>
 
-                <!-- Right: Calculator Card -->
-                <div class="reveal reveal-delay-1">
-                    <div class="bg-white/[.04] backdrop-blur-xl rounded-3xl border border-white/[.08] p-8 md:p-10">
-                        <div class="space-y-6">
-                            <!-- Area input -->
-                            <div>
-                                <label class="block text-white/60 text-sm font-semibold mb-2">Area total (hectares)</label>
-                                <input id="calc-hectares" type="number" min="1" step="1" value="500" placeholder="Ex: 500" class="w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3.5 text-white text-lg font-bold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition">
-                            </div>
-                            <!-- Populacao input -->
-                            <div>
-                                <label class="block text-white/60 text-sm font-semibold mb-2">Populacao desejada (plantas/ha)</label>
-                                <input id="calc-populacao" type="number" min="100000" max="500000" step="10000" value="280000" class="w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3.5 text-white text-lg font-bold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition">
-                                <input id="calc-pop-range" type="range" min="200000" max="400000" step="10000" value="280000" class="w-full mt-2 accent-[#d4a80e]">
-                                <div class="flex justify-between text-[10px] text-white/20 mt-1 px-1"><span>200 mil</span><span>300 mil</span><span>400 mil</span></div>
-                            </div>
+                    <!-- Table Header (desktop) -->
+                    <div class="hidden md:grid grid-cols-[2fr_1fr_1fr_1fr_auto] gap-3 mb-3 px-2">
+                        <span class="text-white/30 text-xs font-semibold uppercase tracking-wider">Material / Cultivar</span>
+                        <span class="text-white/30 text-xs font-semibold uppercase tracking-wider">Hectares</span>
+                        <span class="text-white/30 text-xs font-semibold uppercase tracking-wider">Populacao (pl/ha)</span>
+                        <span class="text-white/30 text-xs font-semibold uppercase tracking-wider text-center">Sacos</span>
+                        <span class="w-9"></span>
+                    </div>
 
-                            <!-- Divider -->
-                            <div class="border-t border-white/[.08] pt-6">
-                                <div class="grid grid-cols-2 gap-4 mb-4">
-                                    <div class="bg-white/[.04] rounded-2xl p-5 text-center border border-white/[.06]">
-                                        <p class="text-white/40 text-xs font-semibold uppercase tracking-wider mb-1">Sementes / ha</p>
-                                        <p id="calc-sem-ha" class="text-xl font-extrabold text-white">280.000</p>
-                                    </div>
-                                    <div class="bg-white/[.04] rounded-2xl p-5 text-center border border-white/[.06]">
-                                        <p class="text-white/40 text-xs font-semibold uppercase tracking-wider mb-1">Total Sementes</p>
-                                        <p id="calc-sem-total" class="text-xl font-extrabold text-white">140.000.000</p>
-                                    </div>
+                    <!-- Material Rows Container -->
+                    <div id="calc-rows" class="space-y-3">
+                        <!-- Row 1 (default) -->
+                        <div class="calc-row bg-white/[.03] border border-white/[.07] rounded-2xl p-4 md:p-3">
+                            <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr_auto] gap-3 items-center">
+                                <div>
+                                    <label class="md:hidden block text-white/40 text-xs font-semibold mb-1">Material / Cultivar</label>
+                                    <input type="text" placeholder="Ex: M8349 IPRO" class="calc-name w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3 text-white text-sm font-semibold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition">
                                 </div>
-                                <!-- Main result: BAGS -->
-                                <div class="bg-gradient-to-br from-gold-500/15 to-gold-600/10 rounded-2xl p-7 text-center border border-gold-500/25">
-                                    <p class="text-gold-400/70 text-xs font-semibold uppercase tracking-[.2em] mb-2">Sacos Necessarios</p>
-                                    <p id="calc-bags" class="text-5xl font-extrabold text-gold-400 mb-1">700</p>
-                                    <p class="text-white/25 text-xs">sacos de 200.000 sementes</p>
+                                <div>
+                                    <label class="md:hidden block text-white/40 text-xs font-semibold mb-1">Hectares</label>
+                                    <input type="number" min="1" step="1" value="500" placeholder="ha" class="calc-ha w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3 text-white text-sm font-bold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition text-center">
                                 </div>
+                                <div>
+                                    <label class="md:hidden block text-white/40 text-xs font-semibold mb-1">Populacao (pl/ha)</label>
+                                    <input type="number" min="100000" max="500000" step="10000" value="280000" placeholder="pl/ha" class="calc-pop w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3 text-white text-sm font-bold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition text-center">
+                                </div>
+                                <div class="flex items-center justify-center">
+                                    <span class="calc-bags-out text-2xl font-extrabold text-gold-400">700</span>
+                                    <span class="text-white/25 text-xs ml-1.5">sc</span>
+                                </div>
+                                <button onclick="removeCalcRow(this)" class="calc-remove hidden md:flex w-9 h-9 items-center justify-center rounded-xl bg-white/[.04] hover:bg-red-500/20 border border-white/[.06] hover:border-red-500/30 text-white/20 hover:text-red-400 transition cursor-pointer" title="Remover">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                </button>
+                                <!-- Mobile remove -->
+                                <button onclick="removeCalcRow(this)" class="calc-remove md:hidden text-xs text-white/20 hover:text-red-400 transition underline cursor-pointer text-right">Remover material</button>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Add Row Button -->
+                    <button id="calc-add-row" class="mt-4 w-full flex items-center justify-center gap-2 bg-white/[.04] hover:bg-gold-500/10 border border-dashed border-white/[.1] hover:border-gold-500/30 rounded-2xl py-3.5 text-white/40 hover:text-gold-400 text-sm font-semibold transition cursor-pointer">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        Adicionar Material
+                    </button>
+
+                    <!-- Totals -->
+                    <div class="border-t border-white/[.08] mt-8 pt-6">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="bg-white/[.04] rounded-2xl p-5 text-center border border-white/[.06]">
+                                <p class="text-white/40 text-xs font-semibold uppercase tracking-wider mb-1">Materiais</p>
+                                <p id="calc-total-items" class="text-xl font-extrabold text-white">1</p>
+                            </div>
+                            <div class="bg-white/[.04] rounded-2xl p-5 text-center border border-white/[.06]">
+                                <p class="text-white/40 text-xs font-semibold uppercase tracking-wider mb-1">Area Total</p>
+                                <p id="calc-total-ha" class="text-xl font-extrabold text-white">500 <span class="text-sm font-normal text-white/30">ha</span></p>
+                            </div>
+                            <div class="bg-white/[.04] rounded-2xl p-5 text-center border border-white/[.06]">
+                                <p class="text-white/40 text-xs font-semibold uppercase tracking-wider mb-1">Total Sementes</p>
+                                <p id="calc-total-seeds" class="text-xl font-extrabold text-white">140M</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-gold-500/15 to-gold-600/10 rounded-2xl p-5 text-center border border-gold-500/25">
+                                <p class="text-gold-400/70 text-xs font-semibold uppercase tracking-[.15em] mb-1">Total Sacos</p>
+                                <p id="calc-total-bags" class="text-3xl font-extrabold text-gold-400">700</p>
+                                <p class="text-white/25 text-[10px]">sacos de 200.000 sementes</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -859,33 +905,85 @@
         document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 20);
     });
 
-    // ===== SEED CALCULATOR =====
-    (function() {
-        const SEEDS_PER_BAG = 200000;
-        const ha = document.getElementById('calc-hectares');
-        const pop = document.getElementById('calc-populacao');
-        const rng = document.getElementById('calc-pop-range');
-        const out = {
-            semHa: document.getElementById('calc-sem-ha'),
-            semTotal: document.getElementById('calc-sem-total'),
-            bags: document.getElementById('calc-bags')
-        };
-        function calc() {
-            const h = parseFloat(ha.value) || 0;
-            const p = parseFloat(pop.value) || 280000;
-            const totalSeeds = h * p;
-            const bags = Math.ceil(totalSeeds / SEEDS_PER_BAG);
-            out.semHa.textContent = p.toLocaleString('pt-BR');
-            out.semTotal.textContent = totalSeeds.toLocaleString('pt-BR');
-            out.bags.textContent = bags;
-        }
-        [ha, pop, rng].forEach(el => el.addEventListener('input', function() {
-            if (this === rng) pop.value = rng.value;
-            if (this === pop) rng.value = Math.min(Math.max(pop.value, 200000), 400000);
-            calc();
-        }));
-        calc();
-    })();
+    // ===== SEED CALCULATOR (Multi-Material) =====
+    const SEEDS_PER_BAG = 200000;
+    const calcRows = document.getElementById('calc-rows');
+    const calcAddBtn = document.getElementById('calc-add-row');
+
+    function calcRowTemplate() {
+        return `<div class="calc-row bg-white/[.03] border border-white/[.07] rounded-2xl p-4 md:p-3" style="animation:fadeSlideIn .3s ease">
+            <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr_auto] gap-3 items-center">
+                <div>
+                    <label class="md:hidden block text-white/40 text-xs font-semibold mb-1">Material / Cultivar</label>
+                    <input type="text" placeholder="Ex: M8349 IPRO" class="calc-name w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3 text-white text-sm font-semibold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition">
+                </div>
+                <div>
+                    <label class="md:hidden block text-white/40 text-xs font-semibold mb-1">Hectares</label>
+                    <input type="number" min="1" step="1" value="" placeholder="ha" class="calc-ha w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3 text-white text-sm font-bold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition text-center">
+                </div>
+                <div>
+                    <label class="md:hidden block text-white/40 text-xs font-semibold mb-1">Populacao (pl/ha)</label>
+                    <input type="number" min="100000" max="500000" step="10000" value="280000" placeholder="pl/ha" class="calc-pop w-full bg-white/[.06] border border-white/[.1] rounded-xl px-4 py-3 text-white text-sm font-bold placeholder:text-white/20 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 transition text-center">
+                </div>
+                <div class="flex items-center justify-center">
+                    <span class="calc-bags-out text-2xl font-extrabold text-gold-400">0</span>
+                    <span class="text-white/25 text-xs ml-1.5">sc</span>
+                </div>
+                <button onclick="removeCalcRow(this)" class="calc-remove hidden md:flex w-9 h-9 items-center justify-center rounded-xl bg-white/[.04] hover:bg-red-500/20 border border-white/[.06] hover:border-red-500/30 text-white/20 hover:text-red-400 transition cursor-pointer" title="Remover">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+                <button onclick="removeCalcRow(this)" class="calc-remove md:hidden text-xs text-white/20 hover:text-red-400 transition underline cursor-pointer text-right">Remover material</button>
+            </div>
+        </div>`;
+    }
+
+    function recalcAll() {
+        const rows = calcRows.querySelectorAll('.calc-row');
+        let totalBags = 0, totalHa = 0, totalSeeds = 0;
+        rows.forEach(row => {
+            const ha = parseFloat(row.querySelector('.calc-ha').value) || 0;
+            const pop = parseFloat(row.querySelector('.calc-pop').value) || 0;
+            const seeds = ha * pop;
+            const bags = Math.ceil(seeds / SEEDS_PER_BAG);
+            row.querySelector('.calc-bags-out').textContent = bags.toLocaleString('pt-BR');
+            totalBags += bags;
+            totalHa += ha;
+            totalSeeds += seeds;
+        });
+        document.getElementById('calc-total-items').textContent = rows.length;
+        document.getElementById('calc-total-ha').innerHTML = totalHa.toLocaleString('pt-BR') + ' <span class="text-sm font-normal text-white/30">ha</span>';
+        const seedsLabel = totalSeeds >= 1e9 ? (totalSeeds / 1e9).toFixed(1).replace('.0','') + 'B' : totalSeeds >= 1e6 ? (totalSeeds / 1e6).toFixed(1).replace('.0','') + 'M' : totalSeeds.toLocaleString('pt-BR');
+        document.getElementById('calc-total-seeds').textContent = seedsLabel;
+        document.getElementById('calc-total-bags').textContent = totalBags.toLocaleString('pt-BR');
+        // Show/hide remove btns (hide if only 1 row)
+        const removeBtns = calcRows.querySelectorAll('.calc-remove');
+        removeBtns.forEach(btn => { if (rows.length <= 1) btn.style.visibility='hidden'; else btn.style.visibility='visible'; });
+    }
+
+    function addCalcRow() {
+        const div = document.createElement('div');
+        div.innerHTML = calcRowTemplate();
+        const row = div.firstElementChild;
+        calcRows.appendChild(row);
+        row.querySelectorAll('input').forEach(inp => inp.addEventListener('input', recalcAll));
+        row.querySelector('.calc-ha').focus();
+        recalcAll();
+    }
+
+    function removeCalcRow(btn) {
+        const rows = calcRows.querySelectorAll('.calc-row');
+        if (rows.length <= 1) return;
+        const row = btn.closest('.calc-row');
+        row.style.animation = 'fadeSlideOut .2s ease forwards';
+        setTimeout(() => { row.remove(); recalcAll(); }, 200);
+    }
+
+    // Init: bind inputs on first row + add button
+    calcRows.querySelectorAll('.calc-row').forEach(row => {
+        row.querySelectorAll('input').forEach(inp => inp.addEventListener('input', recalcAll));
+    });
+    calcAddBtn.addEventListener('click', addCalcRow);
+    recalcAll();
 
     // ===== NEWS SECTION =====
     (async function loadNews() {
