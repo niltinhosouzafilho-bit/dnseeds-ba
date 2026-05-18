@@ -156,6 +156,7 @@
         .wa-ring{position:absolute;inset:0;border-radius:50%;border:2.5px solid #25D366;animation:waRing 2.5s ease-out infinite;pointer-events:none}
         @keyframes waFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
         @keyframes waRing{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.9);opacity:0}}
+        @keyframes starPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.8}}
         @keyframes fadeSlideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
         @keyframes fadeSlideOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(10px);height:0;margin:0;padding:0;overflow:hidden}}
 
@@ -834,6 +835,33 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- ============ AVALIAÇÃO CHAMARIZ ============ -->
+    <section class="py-16 md:py-20 px-4 sm:px-6 lg:px-8" style="background:linear-gradient(180deg,#04120b 0%,rgba(212,168,14,.04) 50%,#04120b 100%)">
+        <div class="max-w-4xl mx-auto reveal">
+            <a href="avaliacao.html" class="group block bg-gradient-to-r from-gold-500/10 via-gold-500/[.06] to-emerald-500/10 border border-gold-500/20 hover:border-gold-400/40 rounded-3xl p-8 md:p-10 transition-all duration-500 hover:shadow-2xl hover:shadow-gold-500/10 hover:-translate-y-1">
+                <div class="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+                    <!-- Stars animation -->
+                    <div class="flex-shrink-0 flex gap-1.5">
+                        <svg class="w-9 h-9 text-gold-400 drop-shadow-[0_0_8px_rgba(245,196,24,.3)]" style="animation:starPulse 2s ease-in-out infinite" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg class="w-9 h-9 text-gold-400 drop-shadow-[0_0_8px_rgba(245,196,24,.3)]" style="animation:starPulse 2s ease-in-out .15s infinite" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg class="w-9 h-9 text-gold-400 drop-shadow-[0_0_8px_rgba(245,196,24,.3)]" style="animation:starPulse 2s ease-in-out .3s infinite" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg class="w-9 h-9 text-gold-400 drop-shadow-[0_0_8px_rgba(245,196,24,.3)]" style="animation:starPulse 2s ease-in-out .45s infinite" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <svg class="w-9 h-9 text-gold-400 drop-shadow-[0_0_8px_rgba(245,196,24,.3)]" style="animation:starPulse 2s ease-in-out .6s infinite" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    </div>
+                    <!-- Text -->
+                    <div class="flex-1 text-center md:text-left">
+                        <h3 class="text-xl md:text-2xl font-extrabold text-white mb-2 tracking-tight">Avalie nosso servico</h3>
+                        <p class="text-white/40 text-sm md:text-base font-light">Sua opiniao e fundamental para continuarmos melhorando. Leva menos de 1 minuto!</p>
+                    </div>
+                    <!-- Arrow -->
+                    <div class="flex-shrink-0 hidden md:flex items-center justify-center w-14 h-14 rounded-2xl bg-gold-500/10 border border-gold-500/20 group-hover:bg-gold-500/20 group-hover:border-gold-400/40 transition-all">
+                        <svg class="w-6 h-6 text-gold-400 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </div>
+                </div>
+            </a>
         </div>
     </section>
 
