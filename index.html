@@ -774,7 +774,7 @@
                 </div>
             </div>
 
-                                                                        <!-- ===== MAPA DE IMPACTOS EL NINO - REDESIGN ===== -->
+                                                                                    <!-- ===== MAPA DE IMPACTOS EL NINO - REDESIGN ===== -->
             <div class="bg-white/[.02] backdrop-blur-sm rounded-2xl border border-white/[.06] p-6 md:p-10 mb-8 reveal">
                 <div class="text-center mb-6">
                     <div class="inline-flex items-center gap-2 bg-red-500/[.08] border border-red-500/12 rounded-full px-4 py-1.5 mb-4">
@@ -786,107 +786,9 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-6">
-                    <!-- MAPA SVG -->
-                    <div class="bg-[#060e09] rounded-xl border border-white/[.06] p-4 md:p-6">
-                        <svg viewBox="0 0 600 520" class="w-full" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <pattern id="mapGrid" width="30" height="30" patternUnits="userSpaceOnUse">
-                                    <circle cx="15" cy="15" r="0.5" fill="rgba(255,255,255,0.06)"/>
-                                </pattern>
-                            </defs>
-
-                            <!-- Fundo com dots -->
-                            <rect width="600" height="520" fill="url(#mapGrid)"/>
-
-                            <!-- ====== ESTADOS (SEM SOBREPOSICAO) ====== -->
-                            <!-- Todos compartilham bordas nos pontos de juncao -->
-                            <!-- Triple junctions: P14(260,150) = MA/TO/PI  |  P16(280,330) = TO/PI/BA -->
-
-                            <!-- MARANHAO SUL (topo) -->
-                            <path d="M 100,45 C 160,30 250,22 300,25 C 350,22 430,35 480,55
-                                     L 460,90 C 420,120 360,140 260,150
-                                     C 200,145 140,125 95,105 Z"
-                                  fill="#C2410C" fill-opacity="0.75" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
-                            <text x="280" y="82" text-anchor="middle" fill="white" font-size="22" font-weight="800" opacity="0.55" letter-spacing="3">MA</text>
-                            <text x="280" y="102" text-anchor="middle" fill="#FB923C" font-size="8.5" font-weight="600" opacity="0.9" letter-spacing="1.5">MARANHAO SUL</text>
-
-                            <!-- TOCANTINS (esquerda) -->
-                            <path d="M 95,105 C 140,125 200,145 260,150
-                                     L 280,330
-                                     C 230,370 160,390 80,395
-                                     L 55,340 C 42,290 40,240 48,190 C 55,155 70,125 95,105 Z"
-                                  fill="#A16207" fill-opacity="0.65" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
-                            <text x="160" y="255" text-anchor="middle" fill="white" font-size="22" font-weight="800" opacity="0.55" letter-spacing="3">TO</text>
-                            <text x="160" y="275" text-anchor="middle" fill="#FBBF24" font-size="8.5" font-weight="600" opacity="0.85" letter-spacing="1.5">TOCANTINS</text>
-
-                            <!-- PIAUI SUL (direita) -->
-                            <path d="M 480,55 L 520,80 C 545,120 555,180 550,240
-                                     C 545,300 525,350 500,380
-                                     L 280,330
-                                     L 260,150
-                                     C 360,140 420,120 460,90 Z"
-                                  fill="#A16207" fill-opacity="0.50" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
-                            <text x="410" y="220" text-anchor="middle" fill="white" font-size="22" font-weight="800" opacity="0.50" letter-spacing="3">PI</text>
-                            <text x="410" y="240" text-anchor="middle" fill="#EAB308" font-size="8.5" font-weight="600" opacity="0.8" letter-spacing="1.5">PIAUI SUL</text>
-
-                            <!-- BAHIA OESTE (base - ALTO RISCO) -->
-                            <path d="M 80,395 C 160,390 230,370 280,330
-                                     L 500,380
-                                     C 490,410 460,440 420,460
-                                     C 370,480 310,490 260,485
-                                     C 200,480 140,460 100,435
-                                     L 80,395 Z"
-                                  fill="#DC2626" fill-opacity="0.65" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
-                            <text x="290" y="415" text-anchor="middle" fill="white" font-size="24" font-weight="800" opacity="0.65" letter-spacing="3">BA</text>
-                            <text x="290" y="438" text-anchor="middle" fill="#FCA5A5" font-size="8.5" font-weight="700" opacity="0.95" letter-spacing="1.5">BAHIA OESTE</text>
-                            <!-- Badge ALTO RISCO -->
-                            <g transform="translate(290,458)">
-                                <rect x="-32" y="-8" width="64" height="16" rx="8" fill="#DC2626" fill-opacity="0.9"/>
-                                <text x="0" y="4" text-anchor="middle" fill="white" font-size="7.5" font-weight="700" letter-spacing="0.5">ALTO RISCO</text>
-                            </g>
-
-                            <!-- ====== CIDADES ====== -->
-                            <!-- Barreiras (BA) - principal -->
-                            <circle cx="350" cy="420" r="6" fill="rgba(220,38,38,0.25)">
-                                <animate attributeName="r" values="4;10;4" dur="2.5s" repeatCount="indefinite"/>
-                                <animate attributeName="opacity" values="0.8;0;0.8" dur="2.5s" repeatCount="indefinite"/>
-                            </circle>
-                            <circle cx="350" cy="420" r="3.5" fill="white" stroke="#DC2626" stroke-width="1.2"/>
-                            <text x="365" y="417" fill="white" font-size="9.5" font-weight="600" opacity="0.85">Barreiras</text>
-
-                            <!-- LEM (BA) -->
-                            <circle cx="310" cy="445" r="2.5" fill="white" stroke="#DC2626" stroke-width="1"/>
-                            <text x="285" y="457" fill="white" font-size="8" font-weight="500" opacity="0.6">LEM</text>
-
-                            <!-- Balsas (MA) -->
-                            <circle cx="250" cy="115" r="2.5" fill="white" stroke="#C2410C" stroke-width="1"/>
-                            <text x="260" y="112" fill="white" font-size="8.5" font-weight="500" opacity="0.6">Balsas</text>
-
-                            <!-- Palmas (TO) -->
-                            <circle cx="115" cy="320" r="2.5" fill="white" stroke="#A16207" stroke-width="1"/>
-                            <text x="85" y="335" fill="white" font-size="8.5" font-weight="500" opacity="0.55">Palmas</text>
-
-                            <!-- Urucui (PI) -->
-                            <circle cx="420" cy="310" r="2" fill="white" stroke="#A16207" stroke-width="1"/>
-                            <text x="432" y="307" fill="white" font-size="8" font-weight="500" opacity="0.5">Urucui</text>
-
-                            <!-- Escala -->
-                            <g transform="translate(30,495)">
-                                <line x1="0" y1="0" x2="70" y2="0" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
-                                <line x1="0" y1="-3" x2="0" y2="3" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-                                <line x1="70" y1="-3" x2="70" y2="3" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
-                                <text x="35" y="13" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="7">~300 km</text>
-                            </g>
-
-                            <!-- Bussola -->
-                            <g transform="translate(555,490)">
-                                <circle cx="0" cy="0" r="12" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
-                                <line x1="0" y1="-10" x2="0" y2="10" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
-                                <line x1="-10" y1="0" x2="10" y2="0" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
-                                <polygon points="0,-10 -3,-3 3,-3" fill="rgba(255,255,255,0.3)"/>
-                                <text x="0" y="-14" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="7" font-weight="700">N</text>
-                            </g>
-                        </svg>
+                    <!-- MAPA LEAFLET REAL -->
+                    <div class="rounded-xl overflow-hidden border border-white/[.06]" style="height:520px; min-height:400px;">
+                        <div id="matopiba-map" style="width:100%; height:100%;"></div>
                     </div>
 
                     <!-- PAINEIS LATERAIS -->
@@ -900,15 +802,15 @@
                                     <div><p class="text-white/80 text-xs font-bold">Alto Risco</p><p class="text-white/30 text-[10px]">Veranicos + calor extremo</p></div>
                                 </div>
                                 <div class="flex items-start gap-3">
-                                    <span class="w-4 h-4 rounded bg-orange-700/70 border border-orange-600/50 mt-0.5 shrink-0"></span>
+                                    <span class="w-4 h-4 rounded bg-orange-600/70 border border-orange-500/50 mt-0.5 shrink-0"></span>
                                     <div><p class="text-white/80 text-xs font-bold">Moderado-Alto</p><p class="text-white/30 text-[10px]">Reducao chuvas + calor</p></div>
                                 </div>
                                 <div class="flex items-start gap-3">
-                                    <span class="w-4 h-4 rounded bg-yellow-700/60 border border-yellow-600/40 mt-0.5 shrink-0"></span>
+                                    <span class="w-4 h-4 rounded bg-amber-500/60 border border-amber-400/40 mt-0.5 shrink-0"></span>
                                     <div><p class="text-white/80 text-xs font-bold">Moderado</p><p class="text-white/30 text-[10px]">Chuvas irregulares</p></div>
                                 </div>
                                 <div class="flex items-start gap-3">
-                                    <span class="w-4 h-4 rounded bg-yellow-600/45 border border-yellow-500/35 mt-0.5 shrink-0"></span>
+                                    <span class="w-4 h-4 rounded bg-yellow-500/50 border border-yellow-400/35 mt-0.5 shrink-0"></span>
                                     <div><p class="text-white/80 text-xs font-bold">Moderado</p><p class="text-white/30 text-[10px]">Deficit hidrico cerrado</p></div>
                                 </div>
                             </div>
@@ -923,11 +825,11 @@
                                     <div><p class="text-white/75 text-[11px] font-bold">Bahia Oeste</p><p class="text-white/30 text-[10px]">+1,5°C · -20% chuva</p></div>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-orange-600 shrink-0"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-orange-500 shrink-0"></span>
                                     <div><p class="text-white/75 text-[11px] font-bold">Maranhao Sul</p><p class="text-white/30 text-[10px]">+1,2°C · -15% chuva</p></div>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-600 shrink-0"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0"></span>
                                     <div><p class="text-white/75 text-[11px] font-bold">Tocantins</p><p class="text-white/30 text-[10px]">+1,0°C · irregular</p></div>
                                 </div>
                                 <div class="flex items-center gap-3">
@@ -949,6 +851,121 @@
                     <p class="text-white/15 text-[10px]">Dados projetados — safra 26/27</p>
                 </div>
             </div>
+
+            <!-- Leaflet CSS + JS -->
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+            <script>
+            (function(){
+                if(!document.getElementById('matopiba-map')) return;
+
+                var map = L.map('matopiba-map', {
+                    center: [-9.5, -46.0],
+                    zoom: 5,
+                    zoomControl: true,
+                    attributionControl: false,
+                    scrollWheelZoom: false
+                });
+
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                    maxZoom: 19,
+                    subdomains: 'abcd'
+                }).addTo(map);
+
+                // Tocantins (simplificado)
+                var tocantins = [
+                    [-5.17, -49.10], [-5.50, -47.60], [-6.00, -47.20], [-7.00, -47.50],
+                    [-8.00, -48.00], [-9.00, -48.20], [-10.17, -48.33], [-11.00, -48.50],
+                    [-12.00, -48.60], [-13.00, -48.20], [-13.30, -47.50], [-13.10, -46.70],
+                    [-12.50, -46.40], [-11.50, -46.50], [-10.50, -46.80], [-9.50, -47.00],
+                    [-8.50, -47.20], [-7.50, -47.00], [-6.50, -47.20], [-5.50, -47.40],
+                    [-5.17, -47.60], [-5.17, -49.10]
+                ];
+                L.polygon(tocantins, {
+                    color: '#F59E0B', weight: 1.5, opacity: 0.8,
+                    fillColor: '#F59E0B', fillOpacity: 0.20
+                }).addTo(map).bindTooltip('TOCANTINS<br><span style="font-size:10px;color:#F59E0B">Moderado · +1,0°C</span>', {
+                    permanent: true, direction: 'center', className: 'map-label'
+                });
+
+                // Maranhao Sul (cerrado)
+                var maranhao = [
+                    [-5.00, -47.40], [-4.50, -46.50], [-3.80, -45.50], [-3.50, -44.50],
+                    [-3.30, -43.80], [-4.00, -43.20], [-5.00, -42.80], [-6.00, -43.00],
+                    [-7.00, -43.50], [-7.50, -44.00], [-7.80, -44.80], [-7.50, -45.50],
+                    [-7.20, -46.20], [-6.50, -46.80], [-6.00, -47.20], [-5.50, -47.40],
+                    [-5.00, -47.40]
+                ];
+                L.polygon(maranhao, {
+                    color: '#EA580C', weight: 1.5, opacity: 0.8,
+                    fillColor: '#EA580C', fillOpacity: 0.20
+                }).addTo(map).bindTooltip('MARANHAO<br><span style="font-size:10px;color:#EA580C">Moderado-Alto · +1,2°C</span>', {
+                    permanent: true, direction: 'center', className: 'map-label'
+                });
+
+                // Piaui Sul (cerrado)
+                var piaui = [
+                    [-6.00, -43.00], [-5.50, -42.50], [-6.00, -41.80], [-7.00, -41.30],
+                    [-8.00, -41.00], [-9.00, -41.50], [-10.00, -42.00], [-10.80, -42.80],
+                    [-10.50, -43.50], [-10.00, -44.00], [-9.00, -44.50], [-8.00, -44.80],
+                    [-7.50, -44.80], [-7.00, -44.50], [-7.00, -43.50], [-6.00, -43.00]
+                ];
+                L.polygon(piaui, {
+                    color: '#EAB308', weight: 1.5, opacity: 0.8,
+                    fillColor: '#EAB308', fillOpacity: 0.18
+                }).addTo(map).bindTooltip('PIAUI<br><span style="font-size:10px;color:#EAB308">Moderado · +0,8°C</span>', {
+                    permanent: true, direction: 'center', className: 'map-label'
+                });
+
+                // Bahia Oeste (alto risco)
+                var bahia = [
+                    [-11.00, -46.50], [-10.50, -45.50], [-10.50, -44.50], [-10.80, -43.50],
+                    [-11.50, -43.00], [-12.50, -43.50], [-13.50, -44.00], [-14.50, -44.50],
+                    [-14.80, -45.50], [-14.50, -46.50], [-13.50, -46.80], [-12.50, -46.60],
+                    [-11.50, -46.50], [-11.00, -46.50]
+                ];
+                L.polygon(bahia, {
+                    color: '#EF4444', weight: 2, opacity: 0.9,
+                    fillColor: '#EF4444', fillOpacity: 0.25
+                }).addTo(map).bindTooltip('BAHIA OESTE<br><span style="font-size:10px;color:#EF4444">ALTO RISCO · +1,5°C</span>', {
+                    permanent: true, direction: 'center', className: 'map-label-ba'
+                });
+
+                // Cidades
+                var cityIcon = function(color){
+                    return L.divIcon({
+                        className: 'city-marker',
+                        html: '<div style="width:8px;height:8px;background:'+color+';border:2px solid white;border-radius:50%;box-shadow:0 0 6px rgba(0,0,0,0.5);"></div>',
+                        iconSize: [8,8], iconAnchor: [4,4]
+                    });
+                };
+                var pulseIcon = L.divIcon({
+                    className: 'city-marker-pulse',
+                    html: '<div style="position:relative;"><div style="width:10px;height:10px;background:#EF4444;border:2px solid white;border-radius:50;box-shadow:0 0 8px rgba(239,68,68,0.6);"></div><div style="position:absolute;top:-5px;left:-5px;width:20px;height:20px;border:2px solid #EF4444;border-radius:50%;animation:pulse-ring 2s infinite;"></div></div>',
+                    iconSize: [10,10], iconAnchor: [5,5]
+                });
+
+                L.marker([-12.15, -44.99], {icon: pulseIcon}).addTo(map)
+                    .bindTooltip('Barreiras', {permanent: true, direction: 'right', offset: [10,0], className: 'city-label'});
+                L.marker([-12.10, -45.80], {icon: cityIcon('#EF4444')}).addTo(map)
+                    .bindTooltip('LEM', {permanent: true, direction: 'left', offset: [-8,0], className: 'city-label'});
+                L.marker([-7.53, -46.04], {icon: cityIcon('#EA580C')}).addTo(map)
+                    .bindTooltip('Balsas', {permanent: true, direction: 'right', offset: [8,0], className: 'city-label'});
+                L.marker([-10.18, -48.33], {icon: cityIcon('#F59E0B')}).addTo(map)
+                    .bindTooltip('Palmas', {permanent: true, direction: 'left', offset: [-8,0], className: 'city-label'});
+                L.marker([-7.23, -44.56], {icon: cityIcon('#EAB308')}).addTo(map)
+                    .bindTooltip('Urucui', {permanent: true, direction: 'right', offset: [8,0], className: 'city-label'});
+            })();
+            </script>
+            <style>
+                .map-label { background: transparent !important; border: none !important; box-shadow: none !important; color: white; font-size: 13px; font-weight: 700; text-shadow: 0 1px 4px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5); letter-spacing: 2px; text-align: center; }
+                .map-label-ba { background: transparent !important; border: none !important; box-shadow: none !important; color: #FCA5A5; font-size: 14px; font-weight: 800; text-shadow: 0 1px 6px rgba(0,0,0,0.9), 0 0 12px rgba(239,68,68,0.3); letter-spacing: 2px; text-align: center; }
+                .city-label { background: rgba(0,0,0,0.6) !important; border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 4px !important; padding: 2px 6px !important; color: white !important; font-size: 11px !important; font-weight: 600 !important; box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important; }
+                .city-label::before { border-right-color: rgba(0,0,0,0.6) !important; }
+                @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2.5); opacity: 0; } }
+                #matopiba-map { background: #0a1e14; }
+                .leaflet-control-zoom a { background: rgba(0,0,0,0.7) !important; color: white !important; border-color: rgba(255,255,255,0.15) !important; }
+            </style>
 
 
             <!-- ===== CICLO DA SOJA x EL NINO ===== -->
