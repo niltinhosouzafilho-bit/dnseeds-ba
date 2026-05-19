@@ -774,7 +774,7 @@
                 </div>
             </div>
 
-                                                                                    <!-- ===== MAPA DE IMPACTOS EL NINO - REDESIGN ===== -->
+                                                                                                <!-- ===== MAPA DE IMPACTOS EL NINO - REDESIGN ===== -->
             <div class="bg-white/[.02] backdrop-blur-sm rounded-2xl border border-white/[.06] p-6 md:p-10 mb-8 reveal">
                 <div class="text-center mb-6">
                     <div class="inline-flex items-center gap-2 bg-red-500/[.08] border border-red-500/12 rounded-full px-4 py-1.5 mb-4">
@@ -782,13 +782,48 @@
                         <span class="text-red-300 text-[10px] font-bold uppercase tracking-[.15em]">Alerta Climatico MATOPIBA</span>
                     </div>
                     <h3 class="text-white font-bold text-xl md:text-2xl mb-1 tracking-tight">Mapa de Risco Climatico — El Nino 26/27</h3>
-                    <p class="text-white/30 text-xs">Classificacao de risco por estado na regiao MATOPIBA</p>
+                    <p class="text-white/30 text-xs">Projecao climatica por estado na regiao MATOPIBA</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-6">
-                    <!-- MAPA LEAFLET REAL -->
-                    <div class="rounded-xl overflow-hidden border border-white/[.06]" style="height:520px; min-height:400px;">
+                    <!-- MAPA LEAFLET SATELITE (estilo INMET) -->
+                    <div class="relative rounded-xl overflow-hidden border border-white/[.06]" style="height:540px; min-height:420px;">
                         <div id="matopiba-map" style="width:100%; height:100%;"></div>
+
+                        <!-- Satellite / Infravermelha toggle (decorativo, estilo INMET) -->
+                        <div class="absolute top-3 right-3 z-[1000] flex flex-col gap-1.5">
+                            <div class="flex items-center gap-2 bg-[#0d2847]/80 backdrop-blur-md rounded-lg px-3 py-2 border border-cyan-500/20">
+                                <span class="w-2 h-2 bg-cyan-400 rounded-full"></span>
+                                <span class="text-cyan-300 text-[10px] font-bold tracking-wide">Satelite</span>
+                            </div>
+                            <div class="flex items-center gap-2 bg-black/40 backdrop-blur-md rounded-lg px-3 py-1.5 border border-white/[.06]">
+                                <span class="w-1.5 h-1.5 bg-blue-400/40 rounded-full"></span>
+                                <span class="text-white/25 text-[10px]">Infravermelha</span>
+                            </div>
+                        </div>
+
+                        <!-- Escala de Temperatura (lado esquerdo, estilo INMET) -->
+                        <div class="absolute left-3 top-1/2 -translate-y-1/2 z-[1000] flex items-center gap-1.5">
+                            <div class="flex flex-col items-end text-[8px] text-white/40 font-mono leading-none" style="height:130px; justify-content:space-between;">
+                                <span>+2.0°C</span>
+                                <span>+1.5°C</span>
+                                <span>+1.0°C</span>
+                                <span>+0.5°C</span>
+                                <span style="color:rgba(255,255,255,0.2)">0°C</span>
+                            </div>
+                            <div class="rounded-full overflow-hidden border border-white/10" style="width:8px; height:130px; background: linear-gradient(to bottom, #DC2626, #EF4444, #EA580C, #F59E0B, #EAB308, #22C55E);"></div>
+                        </div>
+
+                        <!-- Barra de timestamp inferior (estilo INMET player) -->
+                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-[1000] flex items-center gap-3 bg-black/60 backdrop-blur-md rounded-full px-5 py-2.5 border border-white/10">
+                            <div class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                                <svg class="w-3 h-3 text-white/50" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.84A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.27l9.344-5.891a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>
+                            </div>
+                            <span class="text-white/50 text-[11px] font-medium tracking-wide whitespace-nowrap">Projecao Safra 26/27</span>
+                            <div class="w-28 h-[3px] bg-white/10 rounded-full overflow-hidden shrink-0">
+                                <div class="h-full bg-cyan-400/50 rounded-full" style="width:65%;"></div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- PAINEIS LATERAIS -->
@@ -862,110 +897,97 @@
                 var map = L.map('matopiba-map', {
                     center: [-9.5, -46.0],
                     zoom: 5,
-                    zoomControl: true,
+                    zoomControl: false,
                     attributionControl: false,
                     scrollWheelZoom: false
                 });
 
-                L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                    maxZoom: 19,
-                    subdomains: 'abcd'
+                L.control.zoom({position:'topleft'}).addTo(map);
+
+                // Satellite base tiles (ESRI World Imagery) — filtered to infrared look via CSS
+                L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                    maxZoom: 18
                 }).addTo(map);
 
-                // Tocantins (simplificado)
+                // ---------- State data ----------
                 var tocantins = [
-                    [-5.17, -49.10], [-5.50, -47.60], [-6.00, -47.20], [-7.00, -47.50],
-                    [-8.00, -48.00], [-9.00, -48.20], [-10.17, -48.33], [-11.00, -48.50],
-                    [-12.00, -48.60], [-13.00, -48.20], [-13.30, -47.50], [-13.10, -46.70],
-                    [-12.50, -46.40], [-11.50, -46.50], [-10.50, -46.80], [-9.50, -47.00],
-                    [-8.50, -47.20], [-7.50, -47.00], [-6.50, -47.20], [-5.50, -47.40],
-                    [-5.17, -47.60], [-5.17, -49.10]
+                    [-5.17,-49.10],[-5.50,-47.60],[-6.00,-47.20],[-7.00,-47.50],
+                    [-8.00,-48.00],[-9.00,-48.20],[-10.17,-48.33],[-11.00,-48.50],
+                    [-12.00,-48.60],[-13.00,-48.20],[-13.30,-47.50],[-13.10,-46.70],
+                    [-12.50,-46.40],[-11.50,-46.50],[-10.50,-46.80],[-9.50,-47.00],
+                    [-8.50,-47.20],[-7.50,-47.00],[-6.50,-47.20],[-5.50,-47.40],
+                    [-5.17,-47.60],[-5.17,-49.10]
                 ];
-                L.polygon(tocantins, {
-                    color: '#F59E0B', weight: 1.5, opacity: 0.8,
-                    fillColor: '#F59E0B', fillOpacity: 0.20
-                }).addTo(map).bindTooltip('TOCANTINS<br><span style="font-size:10px;color:#F59E0B">Moderado · +1,0°C</span>', {
-                    permanent: true, direction: 'center', className: 'map-label'
-                });
-
-                // Maranhao Sul (cerrado)
                 var maranhao = [
-                    [-5.00, -47.40], [-4.50, -46.50], [-3.80, -45.50], [-3.50, -44.50],
-                    [-3.30, -43.80], [-4.00, -43.20], [-5.00, -42.80], [-6.00, -43.00],
-                    [-7.00, -43.50], [-7.50, -44.00], [-7.80, -44.80], [-7.50, -45.50],
-                    [-7.20, -46.20], [-6.50, -46.80], [-6.00, -47.20], [-5.50, -47.40],
-                    [-5.00, -47.40]
+                    [-5.00,-47.40],[-4.50,-46.50],[-3.80,-45.50],[-3.50,-44.50],
+                    [-3.30,-43.80],[-4.00,-43.20],[-5.00,-42.80],[-6.00,-43.00],
+                    [-7.00,-43.50],[-7.50,-44.00],[-7.80,-44.80],[-7.50,-45.50],
+                    [-7.20,-46.20],[-6.50,-46.80],[-6.00,-47.20],[-5.50,-47.40],
+                    [-5.00,-47.40]
                 ];
-                L.polygon(maranhao, {
-                    color: '#EA580C', weight: 1.5, opacity: 0.8,
-                    fillColor: '#EA580C', fillOpacity: 0.20
-                }).addTo(map).bindTooltip('MARANHAO<br><span style="font-size:10px;color:#EA580C">Moderado-Alto · +1,2°C</span>', {
-                    permanent: true, direction: 'center', className: 'map-label'
-                });
-
-                // Piaui Sul (cerrado)
                 var piaui = [
-                    [-6.00, -43.00], [-5.50, -42.50], [-6.00, -41.80], [-7.00, -41.30],
-                    [-8.00, -41.00], [-9.00, -41.50], [-10.00, -42.00], [-10.80, -42.80],
-                    [-10.50, -43.50], [-10.00, -44.00], [-9.00, -44.50], [-8.00, -44.80],
-                    [-7.50, -44.80], [-7.00, -44.50], [-7.00, -43.50], [-6.00, -43.00]
+                    [-6.00,-43.00],[-5.50,-42.50],[-6.00,-41.80],[-7.00,-41.30],
+                    [-8.00,-41.00],[-9.00,-41.50],[-10.00,-42.00],[-10.80,-42.80],
+                    [-10.50,-43.50],[-10.00,-44.00],[-9.00,-44.50],[-8.00,-44.80],
+                    [-7.50,-44.80],[-7.00,-44.50],[-7.00,-43.50],[-6.00,-43.00]
                 ];
-                L.polygon(piaui, {
-                    color: '#EAB308', weight: 1.5, opacity: 0.8,
-                    fillColor: '#EAB308', fillOpacity: 0.18
-                }).addTo(map).bindTooltip('PIAUI<br><span style="font-size:10px;color:#EAB308">Moderado · +0,8°C</span>', {
-                    permanent: true, direction: 'center', className: 'map-label'
-                });
-
-                // Bahia Oeste (alto risco)
                 var bahia = [
-                    [-11.00, -46.50], [-10.50, -45.50], [-10.50, -44.50], [-10.80, -43.50],
-                    [-11.50, -43.00], [-12.50, -43.50], [-13.50, -44.00], [-14.50, -44.50],
-                    [-14.80, -45.50], [-14.50, -46.50], [-13.50, -46.80], [-12.50, -46.60],
-                    [-11.50, -46.50], [-11.00, -46.50]
+                    [-11.00,-46.50],[-10.50,-45.50],[-10.50,-44.50],[-10.80,-43.50],
+                    [-11.50,-43.00],[-12.50,-43.50],[-13.50,-44.00],[-14.50,-44.50],
+                    [-14.80,-45.50],[-14.50,-46.50],[-13.50,-46.80],[-12.50,-46.60],
+                    [-11.50,-46.50],[-11.00,-46.50]
                 ];
-                L.polygon(bahia, {
-                    color: '#EF4444', weight: 2, opacity: 0.9,
-                    fillColor: '#EF4444', fillOpacity: 0.25
-                }).addTo(map).bindTooltip('BAHIA OESTE<br><span style="font-size:10px;color:#EF4444">ALTO RISCO · +1,5°C</span>', {
-                    permanent: true, direction: 'center', className: 'map-label-ba'
-                });
 
-                // Cidades
-                var cityIcon = function(color){
-                    return L.divIcon({
-                        className: 'city-marker',
-                        html: '<div style="width:8px;height:8px;background:'+color+';border:2px solid white;border-radius:50%;box-shadow:0 0 6px rgba(0,0,0,0.5);"></div>',
-                        iconSize: [8,8], iconAnchor: [4,4]
-                    });
+                // ---- Risk zone fills (semi-transparent colored overlay like weather radar) ----
+                L.polygon(bahia,    {color:'transparent',weight:0,fillColor:'#EF4444',fillOpacity:0.28}).addTo(map);
+                L.polygon(maranhao, {color:'transparent',weight:0,fillColor:'#EA580C',fillOpacity:0.22}).addTo(map);
+                L.polygon(tocantins,{color:'transparent',weight:0,fillColor:'#F59E0B',fillOpacity:0.18}).addTo(map);
+                L.polygon(piaui,    {color:'transparent',weight:0,fillColor:'#EAB308',fillOpacity:0.16}).addTo(map);
+
+                // ---- State boundary outlines (thin dark lines on top, like INMET) ----
+                L.polygon(tocantins,{color:'#222',weight:1.3,opacity:0.55,fill:false,dashArray:'4,3'}).addTo(map);
+                L.polygon(maranhao, {color:'#222',weight:1.3,opacity:0.55,fill:false,dashArray:'4,3'}).addTo(map);
+                L.polygon(piaui,    {color:'#222',weight:1.3,opacity:0.55,fill:false,dashArray:'4,3'}).addTo(map);
+                L.polygon(bahia,    {color:'#333',weight:1.8,opacity:0.65,fill:false}).addTo(map);
+
+                // ---- State labels ----
+                L.polygon(tocantins,{opacity:0,fillOpacity:0}).addTo(map)
+                    .bindTooltip('TOCANTINS<br><span style="font-size:10px;color:#F59E0B">Moderado · +1,0°C</span>',{permanent:true,direction:'center',className:'map-lbl'});
+                L.polygon(maranhao,{opacity:0,fillOpacity:0}).addTo(map)
+                    .bindTooltip('MARANHAO<br><span style="font-size:10px;color:#EA580C">Moderado-Alto · +1,2°C</span>',{permanent:true,direction:'center',className:'map-lbl'});
+                L.polygon(piaui,{opacity:0,fillOpacity:0}).addTo(map)
+                    .bindTooltip('PIAUI<br><span style="font-size:10px;color:#EAB308">Moderado · +0,8°C</span>',{permanent:true,direction:'center',className:'map-lbl'});
+                L.polygon(bahia,{opacity:0,fillOpacity:0}).addTo(map)
+                    .bindTooltip('BAHIA OESTE<br><span style="font-size:10px;color:#FCA5A5">ALTO RISCO · +1,5°C</span>',{permanent:true,direction:'center',className:'map-lbl-ba'});
+
+                // ---- City markers ----
+                var cityIcon = function(c){
+                    return L.divIcon({className:'city-dot',html:'<div style="width:7px;height:7px;background:'+c+';border:1.5px solid rgba(255,255,255,.8);border-radius:50%;box-shadow:0 0 8px rgba(0,0,0,.6);"></div>',iconSize:[7,7],iconAnchor:[3.5,3.5]});
                 };
                 var pulseIcon = L.divIcon({
-                    className: 'city-marker-pulse',
-                    html: '<div style="position:relative;"><div style="width:10px;height:10px;background:#EF4444;border:2px solid white;border-radius:50;box-shadow:0 0 8px rgba(239,68,68,0.6);"></div><div style="position:absolute;top:-5px;left:-5px;width:20px;height:20px;border:2px solid #EF4444;border-radius:50%;animation:pulse-ring 2s infinite;"></div></div>',
-                    iconSize: [10,10], iconAnchor: [5,5]
+                    className:'city-dot-pulse',
+                    html:'<div style="position:relative"><div style="width:9px;height:9px;background:#EF4444;border:1.5px solid rgba(255,255,255,.9);border-radius:50%;box-shadow:0 0 10px rgba(239,68,68,.5)"></div><div style="position:absolute;top:-5px;left:-5px;width:19px;height:19px;border:1.5px solid #EF4444;border-radius:50%;animation:pulse-sat 2s infinite"></div></div>',
+                    iconSize:[9,9],iconAnchor:[4.5,4.5]
                 });
 
-                L.marker([-12.15, -44.99], {icon: pulseIcon}).addTo(map)
-                    .bindTooltip('Barreiras', {permanent: true, direction: 'right', offset: [10,0], className: 'city-label'});
-                L.marker([-12.10, -45.80], {icon: cityIcon('#EF4444')}).addTo(map)
-                    .bindTooltip('LEM', {permanent: true, direction: 'left', offset: [-8,0], className: 'city-label'});
-                L.marker([-7.53, -46.04], {icon: cityIcon('#EA580C')}).addTo(map)
-                    .bindTooltip('Balsas', {permanent: true, direction: 'right', offset: [8,0], className: 'city-label'});
-                L.marker([-10.18, -48.33], {icon: cityIcon('#F59E0B')}).addTo(map)
-                    .bindTooltip('Palmas', {permanent: true, direction: 'left', offset: [-8,0], className: 'city-label'});
-                L.marker([-7.23, -44.56], {icon: cityIcon('#EAB308')}).addTo(map)
-                    .bindTooltip('Urucui', {permanent: true, direction: 'right', offset: [8,0], className: 'city-label'});
+                L.marker([-12.15,-44.99],{icon:pulseIcon}).addTo(map).bindTooltip('Barreiras',{permanent:true,direction:'right',offset:[10,0],className:'city-lbl'});
+                L.marker([-12.10,-45.80],{icon:cityIcon('#EF4444')}).addTo(map).bindTooltip('LEM',{permanent:true,direction:'left',offset:[-8,0],className:'city-lbl'});
+                L.marker([-7.53,-46.04],{icon:cityIcon('#EA580C')}).addTo(map).bindTooltip('Balsas',{permanent:true,direction:'right',offset:[8,0],className:'city-lbl'});
+                L.marker([-10.18,-48.33],{icon:cityIcon('#F59E0B')}).addTo(map).bindTooltip('Palmas',{permanent:true,direction:'left',offset:[-8,0],className:'city-lbl'});
+                L.marker([-7.23,-44.56],{icon:cityIcon('#EAB308')}).addTo(map).bindTooltip('Urucui',{permanent:true,direction:'right',offset:[8,0],className:'city-lbl'});
             })();
             </script>
             <style>
-                .map-label { background: transparent !important; border: none !important; box-shadow: none !important; color: white; font-size: 13px; font-weight: 700; text-shadow: 0 1px 4px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5); letter-spacing: 2px; text-align: center; }
-                .map-label-ba { background: transparent !important; border: none !important; box-shadow: none !important; color: #FCA5A5; font-size: 14px; font-weight: 800; text-shadow: 0 1px 6px rgba(0,0,0,0.9), 0 0 12px rgba(239,68,68,0.3); letter-spacing: 2px; text-align: center; }
-                .city-label { background: rgba(0,0,0,0.6) !important; border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 4px !important; padding: 2px 6px !important; color: white !important; font-size: 11px !important; font-weight: 600 !important; box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important; }
-                .city-label::before { border-right-color: rgba(0,0,0,0.6) !important; }
-                @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2.5); opacity: 0; } }
-                #matopiba-map { background: #0a1e14; }
-                .leaflet-control-zoom a { background: rgba(0,0,0,0.7) !important; color: white !important; border-color: rgba(255,255,255,0.15) !important; }
+                #matopiba-map{background:#080808}
+                #matopiba-map .leaflet-tile-pane{filter:grayscale(.85) brightness(.45) contrast(1.35)}
+                .map-lbl{background:transparent!important;border:none!important;box-shadow:none!important;color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,.9),0 0 14px rgba(0,0,0,.7);letter-spacing:2px;text-align:center}
+                .map-lbl-ba{background:transparent!important;border:none!important;box-shadow:none!important;color:#FCA5A5;font-size:13px;font-weight:800;text-shadow:0 1px 8px rgba(0,0,0,.95),0 0 16px rgba(239,68,68,.3);letter-spacing:2px;text-align:center}
+                .city-lbl{background:rgba(0,0,0,.7)!important;border:1px solid rgba(255,255,255,.12)!important;border-radius:4px!important;padding:2px 6px!important;color:#fff!important;font-size:10px!important;font-weight:600!important;box-shadow:0 2px 8px rgba(0,0,0,.5)!important}
+                .city-lbl::before{border-right-color:rgba(0,0,0,.7)!important}
+                @keyframes pulse-sat{0%{transform:scale(1);opacity:.8}100%{transform:scale(2.5);opacity:0}}
+                .leaflet-control-zoom a{background:rgba(0,0,0,.7)!important;color:#fff!important;border-color:rgba(255,255,255,.12)!important}
             </style>
+
 
 
             <!-- ===== CICLO DA SOJA x EL NINO ===== -->
