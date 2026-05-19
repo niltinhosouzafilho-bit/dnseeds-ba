@@ -774,7 +774,7 @@
                 </div>
             </div>
 
-                                                            <!-- ===== MAPA DE IMPACTOS EL NINO - REDESIGN ===== -->
+                                                                        <!-- ===== MAPA DE IMPACTOS EL NINO - REDESIGN ===== -->
             <div class="bg-white/[.02] backdrop-blur-sm rounded-2xl border border-white/[.06] p-6 md:p-10 mb-8 reveal">
                 <div class="text-center mb-6">
                     <div class="inline-flex items-center gap-2 bg-red-500/[.08] border border-red-500/12 rounded-full px-4 py-1.5 mb-4">
@@ -785,186 +785,163 @@
                     <p class="text-white/30 text-xs">Classificacao de risco por estado na regiao MATOPIBA</p>
                 </div>
 
-                <!-- Mapa estilo cartografico -->
-                <div class="flex justify-center mb-6">
-                    <svg viewBox="0 0 820 620" class="w-full max-w-4xl" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <!-- Padrão de grid sutil -->
-                            <pattern id="gridPattern" width="20" height="20" patternUnits="userSpaceOnUse">
-                                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
-                            </pattern>
-                            <!-- Sombra para o mapa -->
-                            <filter id="mapShadow" x="-5%" y="-5%" width="110%" height="110%">
-                                <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="rgba(0,0,0,0.4)"/>
-                            </filter>
-                            <!-- Gradiente de fundo -->
-                            <linearGradient id="mapBg" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="rgba(10,30,20,0.6)"/>
-                                <stop offset="100%" stop-color="rgba(5,15,10,0.8)"/>
-                            </linearGradient>
-                        </defs>
+                <div class="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-6">
+                    <!-- MAPA SVG -->
+                    <div class="bg-[#060e09] rounded-xl border border-white/[.06] p-4 md:p-6">
+                        <svg viewBox="0 0 600 520" class="w-full" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <pattern id="mapGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+                                    <circle cx="15" cy="15" r="0.5" fill="rgba(255,255,255,0.06)"/>
+                                </pattern>
+                            </defs>
 
-                        <!-- Fundo do mapa com borda -->
-                        <rect x="40" y="20" width="540" height="560" rx="12" fill="url(#mapBg)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-                        <rect x="40" y="20" width="540" height="560" rx="12" fill="url(#gridPattern)"/>
+                            <!-- Fundo com dots -->
+                            <rect width="600" height="520" fill="url(#mapGrid)"/>
 
-                        <!-- Titulo do mapa dentro do SVG -->
-                        <text x="310" y="52" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11" font-weight="600" letter-spacing="3" text-transform="uppercase">REGIAO MATOPIBA — BRASIL</text>
-                        <line x1="200" y1="60" x2="420" y2="60" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+                            <!-- ====== ESTADOS (SEM SOBREPOSICAO) ====== -->
+                            <!-- Todos compartilham bordas nos pontos de juncao -->
+                            <!-- Triple junctions: P14(260,150) = MA/TO/PI  |  P16(280,330) = TO/PI/BA -->
 
-                        <!-- ===== ESTADOS ===== -->
+                            <!-- MARANHAO SUL (topo) -->
+                            <path d="M 100,45 C 160,30 250,22 300,25 C 350,22 430,35 480,55
+                                     L 460,90 C 420,120 360,140 260,150
+                                     C 200,145 140,125 95,105 Z"
+                                  fill="#C2410C" fill-opacity="0.75" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+                            <text x="280" y="82" text-anchor="middle" fill="white" font-size="22" font-weight="800" opacity="0.55" letter-spacing="3">MA</text>
+                            <text x="280" y="102" text-anchor="middle" fill="#FB923C" font-size="8.5" font-weight="600" opacity="0.9" letter-spacing="1.5">MARANHAO SUL</text>
 
-                        <!-- MARANHÃO (sul) — cerrado maranhense -->
-                        <path d="M 160,80 L 350,72 L 420,80 L 445,110 L 430,160 L 400,195 L 355,215 L 310,225 L 250,220 L 195,205 L 155,175 L 130,135 L 135,100 Z"
-                              fill="#D97706" fill-opacity="0.65" stroke="rgba(255,255,255,0.5)" stroke-width="1.8" filter="url(#mapShadow)"/>
-                        <!-- Label MA -->
-                        <text x="290" y="135" text-anchor="middle" fill="white" font-size="28" font-weight="800" opacity="0.7" letter-spacing="4">MA</text>
-                        <text x="290" y="158" text-anchor="middle" fill="white" font-size="9" font-weight="600" opacity="0.5" letter-spacing="2">MARANHAO SUL</text>
+                            <!-- TOCANTINS (esquerda) -->
+                            <path d="M 95,105 C 140,125 200,145 260,150
+                                     L 280,330
+                                     C 230,370 160,390 80,395
+                                     L 55,340 C 42,290 40,240 48,190 C 55,155 70,125 95,105 Z"
+                                  fill="#A16207" fill-opacity="0.65" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+                            <text x="160" y="255" text-anchor="middle" fill="white" font-size="22" font-weight="800" opacity="0.55" letter-spacing="3">TO</text>
+                            <text x="160" y="275" text-anchor="middle" fill="#FBBF24" font-size="8.5" font-weight="600" opacity="0.85" letter-spacing="1.5">TOCANTINS</text>
 
-                        <!-- TOCANTINS — forma longa vertical -->
-                        <path d="M 130,135 L 155,175 L 195,205 L 250,220 L 310,225 L 310,270 L 295,320 L 270,370 L 240,410 L 210,435 L 175,440 L 140,425 L 110,395 L 85,355 L 72,310 L 68,260 L 75,210 L 90,170 Z"
-                              fill="#F59E0B" fill-opacity="0.55" stroke="rgba(255,255,255,0.5)" stroke-width="1.8" filter="url(#mapShadow)"/>
-                        <!-- Label TO -->
-                        <text x="185" y="310" text-anchor="middle" fill="white" font-size="26" font-weight="800" opacity="0.7" letter-spacing="4">TO</text>
-                        <text x="185" y="332" text-anchor="middle" fill="white" font-size="9" font-weight="600" opacity="0.5" letter-spacing="2">TOCANTINS</text>
+                            <!-- PIAUI SUL (direita) -->
+                            <path d="M 480,55 L 520,80 C 545,120 555,180 550,240
+                                     C 545,300 525,350 500,380
+                                     L 280,330
+                                     L 260,150
+                                     C 360,140 420,120 460,90 Z"
+                                  fill="#A16207" fill-opacity="0.50" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+                            <text x="410" y="220" text-anchor="middle" fill="white" font-size="22" font-weight="800" opacity="0.50" letter-spacing="3">PI</text>
+                            <text x="410" y="240" text-anchor="middle" fill="#EAB308" font-size="8.5" font-weight="600" opacity="0.8" letter-spacing="1.5">PIAUI SUL</text>
 
-                        <!-- PIAUÍ (sul) — cerrado piauiense -->
-                        <path d="M 400,195 L 430,160 L 445,110 L 470,95 L 510,105 L 535,140 L 545,190 L 540,250 L 525,310 L 500,360 L 470,385 L 430,395 L 395,380 L 365,345 L 340,300 L 320,270 L 310,225 L 355,215 Z"
-                              fill="#EAB308" fill-opacity="0.50" stroke="rgba(255,255,255,0.5)" stroke-width="1.8" filter="url(#mapShadow)"/>
-                        <!-- Label PI -->
-                        <text x="435" y="240" text-anchor="middle" fill="white" font-size="26" font-weight="800" opacity="0.7" letter-spacing="4">PI</text>
-                        <text x="435" y="262" text-anchor="middle" fill="white" font-size="9" font-weight="600" opacity="0.5" letter-spacing="2">PIAUI SUL</text>
+                            <!-- BAHIA OESTE (base - ALTO RISCO) -->
+                            <path d="M 80,395 C 160,390 230,370 280,330
+                                     L 500,380
+                                     C 490,410 460,440 420,460
+                                     C 370,480 310,490 260,485
+                                     C 200,480 140,460 100,435
+                                     L 80,395 Z"
+                                  fill="#DC2626" fill-opacity="0.65" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>
+                            <text x="290" y="415" text-anchor="middle" fill="white" font-size="24" font-weight="800" opacity="0.65" letter-spacing="3">BA</text>
+                            <text x="290" y="438" text-anchor="middle" fill="#FCA5A5" font-size="8.5" font-weight="700" opacity="0.95" letter-spacing="1.5">BAHIA OESTE</text>
+                            <!-- Badge ALTO RISCO -->
+                            <g transform="translate(290,458)">
+                                <rect x="-32" y="-8" width="64" height="16" rx="8" fill="#DC2626" fill-opacity="0.9"/>
+                                <text x="0" y="4" text-anchor="middle" fill="white" font-size="7.5" font-weight="700" letter-spacing="0.5">ALTO RISCO</text>
+                            </g>
 
-                        <!-- BAHIA OESTE — zona de alto risco -->
-                        <path d="M 210,435 L 240,410 L 270,370 L 295,320 L 340,300 L 365,345 L 395,380 L 430,395 L 470,385 L 500,400 L 510,430 L 505,465 L 480,490 L 440,505 L 380,515 L 310,510 L 250,500 L 210,480 L 185,460 L 175,440 Z"
-                              fill="#DC2626" fill-opacity="0.55" stroke="rgba(255,255,255,0.6)" stroke-width="2" filter="url(#mapShadow)"/>
-                        <!-- Label BA -->
-                        <text x="355" y="440" text-anchor="middle" fill="white" font-size="28" font-weight="800" opacity="0.8" letter-spacing="4">BA</text>
-                        <text x="355" y="463" text-anchor="middle" fill="white" font-size="9" font-weight="700" opacity="0.6" letter-spacing="2">BAHIA OESTE</text>
+                            <!-- ====== CIDADES ====== -->
+                            <!-- Barreiras (BA) - principal -->
+                            <circle cx="350" cy="420" r="6" fill="rgba(220,38,38,0.25)">
+                                <animate attributeName="r" values="4;10;4" dur="2.5s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.8;0;0.8" dur="2.5s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="350" cy="420" r="3.5" fill="white" stroke="#DC2626" stroke-width="1.2"/>
+                            <text x="365" y="417" fill="white" font-size="9.5" font-weight="600" opacity="0.85">Barreiras</text>
 
-                        <!-- Marcador ALTO RISCO na Bahia -->
-                        <g transform="translate(355,480)">
-                            <rect x="-38" y="-10" width="76" height="19" rx="9" fill="#DC2626" fill-opacity="0.8"/>
-                            <text x="0" y="3" text-anchor="middle" fill="white" font-size="8.5" font-weight="700" letter-spacing="1">ALTO RISCO</text>
-                        </g>
+                            <!-- LEM (BA) -->
+                            <circle cx="310" cy="445" r="2.5" fill="white" stroke="#DC2626" stroke-width="1"/>
+                            <text x="285" y="457" fill="white" font-size="8" font-weight="500" opacity="0.6">LEM</text>
 
-                        <!-- ===== CIDADES ===== -->
+                            <!-- Balsas (MA) -->
+                            <circle cx="250" cy="115" r="2.5" fill="white" stroke="#C2410C" stroke-width="1"/>
+                            <text x="260" y="112" fill="white" font-size="8.5" font-weight="500" opacity="0.6">Balsas</text>
 
-                        <!-- Barreiras (BA) — principal -->
-                        <circle cx="380" cy="455" r="7" fill="rgba(220,38,38,0.2)">
-                            <animate attributeName="r" values="5;12;5" dur="2.5s" repeatCount="indefinite"/>
-                            <animate attributeName="opacity" values="0.8;0;0.8" dur="2.5s" repeatCount="indefinite"/>
-                        </circle>
-                        <circle cx="380" cy="455" r="4" fill="white" stroke="#DC2626" stroke-width="1.5"/>
-                        <text x="396" y="452" fill="white" font-size="10" font-weight="700" opacity="0.85">Barreiras</text>
+                            <!-- Palmas (TO) -->
+                            <circle cx="115" cy="320" r="2.5" fill="white" stroke="#A16207" stroke-width="1"/>
+                            <text x="85" y="335" fill="white" font-size="8.5" font-weight="500" opacity="0.55">Palmas</text>
 
-                        <!-- LEM (BA) -->
-                        <circle cx="320" cy="470" r="3" fill="white" stroke="#DC2626" stroke-width="1"/>
-                        <text x="302" y="486" fill="white" font-size="9" font-weight="500" opacity="0.6">LEM</text>
+                            <!-- Urucui (PI) -->
+                            <circle cx="420" cy="310" r="2" fill="white" stroke="#A16207" stroke-width="1"/>
+                            <text x="432" y="307" fill="white" font-size="8" font-weight="500" opacity="0.5">Urucui</text>
 
-                        <!-- Balsas (MA) -->
-                        <circle cx="280" cy="195" r="3" fill="white" stroke="#D97706" stroke-width="1"/>
-                        <text x="292" y="192" fill="white" font-size="9" font-weight="500" opacity="0.6">Balsas</text>
+                            <!-- Escala -->
+                            <g transform="translate(30,495)">
+                                <line x1="0" y1="0" x2="70" y2="0" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/>
+                                <line x1="0" y1="-3" x2="0" y2="3" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                                <line x1="70" y1="-3" x2="70" y2="3" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+                                <text x="35" y="13" text-anchor="middle" fill="rgba(255,255,255,0.25)" font-size="7">~300 km</text>
+                            </g>
 
-                        <!-- Palmas (TO) -->
-                        <circle cx="148" cy="375" r="3" fill="white" stroke="#F59E0B" stroke-width="1"/>
-                        <text x="120" y="390" fill="white" font-size="9" font-weight="500" opacity="0.6">Palmas</text>
+                            <!-- Bussola -->
+                            <g transform="translate(555,490)">
+                                <circle cx="0" cy="0" r="12" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
+                                <line x1="0" y1="-10" x2="0" y2="10" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+                                <line x1="-10" y1="0" x2="10" y2="0" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
+                                <polygon points="0,-10 -3,-3 3,-3" fill="rgba(255,255,255,0.3)"/>
+                                <text x="0" y="-14" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="7" font-weight="700">N</text>
+                            </g>
+                        </svg>
+                    </div>
 
-                        <!-- Uruçuí (PI) -->
-                        <circle cx="410" cy="350" r="2.5" fill="white" stroke="#EAB308" stroke-width="1"/>
-                        <text x="422" y="347" fill="white" font-size="8.5" font-weight="500" opacity="0.55">Urucui</text>
+                    <!-- PAINEIS LATERAIS -->
+                    <div class="flex flex-col gap-4">
+                        <!-- Legenda -->
+                        <div class="bg-[#060e09] rounded-xl border border-white/[.06] p-5">
+                            <h4 class="text-white/70 text-[11px] font-bold uppercase tracking-wider mb-4 text-center">Legenda de Risco</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3">
+                                    <span class="w-4 h-4 rounded bg-red-600/80 border border-red-500/50 mt-0.5 shrink-0"></span>
+                                    <div><p class="text-white/80 text-xs font-bold">Alto Risco</p><p class="text-white/30 text-[10px]">Veranicos + calor extremo</p></div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="w-4 h-4 rounded bg-orange-700/70 border border-orange-600/50 mt-0.5 shrink-0"></span>
+                                    <div><p class="text-white/80 text-xs font-bold">Moderado-Alto</p><p class="text-white/30 text-[10px]">Reducao chuvas + calor</p></div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="w-4 h-4 rounded bg-yellow-700/60 border border-yellow-600/40 mt-0.5 shrink-0"></span>
+                                    <div><p class="text-white/80 text-xs font-bold">Moderado</p><p class="text-white/30 text-[10px]">Chuvas irregulares</p></div>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <span class="w-4 h-4 rounded bg-yellow-600/45 border border-yellow-500/35 mt-0.5 shrink-0"></span>
+                                    <div><p class="text-white/80 text-xs font-bold">Moderado</p><p class="text-white/30 text-[10px]">Deficit hidrico cerrado</p></div>
+                                </div>
+                            </div>
+                        </div>
 
-                        <!-- Barra do Garças reference -->
-                        <circle cx="160" cy="300" r="2" fill="white" opacity="0.4"/>
-                        <text x="108" y="297" fill="white" font-size="7.5" font-weight="400" opacity="0.35">Miracema</text>
-
-                        <!-- ===== BUSSOLA ===== -->
-                        <g transform="translate(540,545)">
-                            <circle cx="0" cy="0" r="15" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/>
-                            <line x1="0" y1="-12" x2="0" y2="12" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
-                            <line x1="-12" y1="0" x2="12" y2="0" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
-                            <text x="0" y="-15" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="8" font-weight="700">N</text>
-                        </g>
-
-                        <!-- ===== LEGENDA (lado direito) ===== -->
-                        <g transform="translate(600,80)">
-                            <!-- Caixa da legenda -->
-                            <rect x="0" y="0" width="195" height="235" rx="10" fill="rgba(0,0,0,0.35)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-
-                            <!-- Titulo legenda -->
-                            <text x="97" y="28" text-anchor="middle" fill="white" font-size="11" font-weight="700" letter-spacing="1" opacity="0.8">LEGENDA DE RISCO</text>
-                            <line x1="15" y1="38" x2="180" y2="38" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
-
-                            <!-- Alto Risco -->
-                            <rect x="15" y="52" width="22" height="16" rx="3" fill="#DC2626" fill-opacity="0.7" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
-                            <text x="45" y="63" fill="white" font-size="10" font-weight="700" opacity="0.85">Alto Risco</text>
-                            <text x="45" y="76" fill="white" font-size="7.5" opacity="0.4">Veranicos + calor extremo</text>
-
-                            <!-- Risco Moderado-Alto -->
-                            <rect x="15" y="90" width="22" height="16" rx="3" fill="#D97706" fill-opacity="0.65" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
-                            <text x="45" y="101" fill="white" font-size="10" font-weight="600" opacity="0.75">Risco Moderado-Alto</text>
-                            <text x="45" y="114" fill="white" font-size="7.5" opacity="0.4">Reducao chuvas + calor</text>
-
-                            <!-- Risco Moderado -->
-                            <rect x="15" y="128" width="22" height="16" rx="3" fill="#F59E0B" fill-opacity="0.55" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
-                            <text x="45" y="139" fill="white" font-size="10" font-weight="600" opacity="0.75">Risco Moderado</text>
-                            <text x="45" y="152" fill="white" font-size="7.5" opacity="0.4">Chuvas irregulares</text>
-
-                            <!-- Risco Moderado-Baixo -->
-                            <rect x="15" y="166" width="22" height="16" rx="3" fill="#EAB308" fill-opacity="0.50" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
-                            <text x="45" y="177" fill="white" font-size="10" font-weight="600" opacity="0.75">Risco Moderado</text>
-                            <text x="45" y="190" fill="white" font-size="7.5" opacity="0.4">Deficit hidrico cerrado</text>
-
-                            <!-- Cidades -->
-                            <line x1="15" y1="202" x2="180" y2="202" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-                            <circle cx="26" cy="217" r="3" fill="white" stroke="rgba(255,255,255,0.3)" stroke-width="0.8"/>
-                            <text x="45" y="221" fill="white" font-size="9" font-weight="500" opacity="0.55">Cidades de referencia</text>
-                        </g>
-
-                        <!-- ===== DADOS CLIMATICOS (direita, abaixo legenda) ===== -->
-                        <g transform="translate(600,340)">
-                            <rect x="0" y="0" width="195" height="195" rx="10" fill="rgba(0,0,0,0.35)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-
-                            <text x="97" y="28" text-anchor="middle" fill="white" font-size="11" font-weight="700" letter-spacing="1" opacity="0.8">DADOS PROJETADOS</text>
-                            <line x1="15" y1="38" x2="180" y2="38" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
-
-                            <!-- BA data -->
-                            <circle cx="23" cy="58" r="5" fill="#DC2626" fill-opacity="0.6"/>
-                            <text x="35" y="55" fill="white" font-size="9" font-weight="700" opacity="0.8">Bahia Oeste</text>
-                            <text x="35" y="68" fill="white" font-size="8" opacity="0.4">+1,5°C anomalia · -20% chuva</text>
-
-                            <!-- MA data -->
-                            <circle cx="23" cy="92" r="5" fill="#D97706" fill-opacity="0.6"/>
-                            <text x="35" y="89" fill="white" font-size="9" font-weight="700" opacity="0.8">Maranhao Sul</text>
-                            <text x="35" y="102" fill="white" font-size="8" opacity="0.4">+1,2°C anomalia · -15% chuva</text>
-
-                            <!-- TO data -->
-                            <circle cx="23" cy="126" r="5" fill="#F59E0B" fill-opacity="0.6"/>
-                            <text x="35" y="123" fill="white" font-size="9" font-weight="700" opacity="0.8">Tocantins</text>
-                            <text x="35" y="136" fill="white" font-size="8" opacity="0.4">+1,0°C anomalia · irregular</text>
-
-                            <!-- PI data -->
-                            <circle cx="23" cy="160" r="5" fill="#EAB308" fill-opacity="0.6"/>
-                            <text x="35" y="157" fill="white" font-size="9" font-weight="700" opacity="0.8">Piaui Sul</text>
-                            <text x="35" y="170" fill="white" font-size="8" opacity="0.4">+0,8°C anomalia · deficit hidrico</text>
-
-                            <!-- Safra -->
-                            <line x1="15" y1="182" x2="180" y2="182" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
-                            <text x="97" y="195" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="7.5">Projecao Safra 2026/27 · NOAA</text>
-                        </g>
-
-                        <!-- Escala simples -->
-                        <g transform="translate(60,555)">
-                            <line x1="0" y1="0" x2="80" y2="0" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
-                            <line x1="0" y1="-4" x2="0" y2="4" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                            <line x1="80" y1="-4" x2="80" y2="4" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
-                            <text x="40" y="14" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="7.5">~300 km</text>
-                        </g>
-                    </svg>
+                        <!-- Dados Projetados -->
+                        <div class="bg-[#060e09] rounded-xl border border-white/[.06] p-5">
+                            <h4 class="text-white/70 text-[11px] font-bold uppercase tracking-wider mb-4 text-center">Dados Projetados</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-red-500 shrink-0"></span>
+                                    <div><p class="text-white/75 text-[11px] font-bold">Bahia Oeste</p><p class="text-white/30 text-[10px]">+1,5°C · -20% chuva</p></div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-orange-600 shrink-0"></span>
+                                    <div><p class="text-white/75 text-[11px] font-bold">Maranhao Sul</p><p class="text-white/30 text-[10px]">+1,2°C · -15% chuva</p></div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-600 shrink-0"></span>
+                                    <div><p class="text-white/75 text-[11px] font-bold">Tocantins</p><p class="text-white/30 text-[10px]">+1,0°C · irregular</p></div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-500 shrink-0"></span>
+                                    <div><p class="text-white/75 text-[11px] font-bold">Piaui Sul</p><p class="text-white/30 text-[10px]">+0,8°C · deficit hidrico</p></div>
+                                </div>
+                            </div>
+                            <p class="text-white/15 text-[9px] mt-3 text-center">Projecao Safra 26/27 · NOAA</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Fonte -->
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between mt-5">
                     <a href="https://www.otempo.com.br/tempo/2026/5/16/el-nino-pode-castigar-a-soja-202627-do-plantio-a-colheita-por-pelo-menos-9-meses" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-xs text-white/20 hover:text-blue-300 transition">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                         Fonte: O Tempo / NOAA
